@@ -1,0 +1,9 @@
+{
+  "status": "PENDING",
+  "part3_check": "NOT_STARTED",
+  "part3_source_commit": null,
+  "source_bundle_sha256": "7523548350c7fe67091efd1ea5b13027ee04da8927905897543f82f8534b283a",
+  "report_state": "NOT_STARTED",
+  "human_contributions_confirmed": false,
+  "last_updated": "2026-10-20"
+}

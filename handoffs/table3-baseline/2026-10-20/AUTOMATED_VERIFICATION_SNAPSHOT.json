@@ -1,0 +1,24 @@
+{
+  "python_version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "manifest_sha256": "691ba4a65d6d156005bc358eb99d514a4c698e784d21b49458a73bb07bdddc2b",
+  "checksums_pass": true,
+  "source_input_prompt_checks_pass": true,
+  "requests": 3096,
+  "unique_response_ids": 3096,
+  "conditions": 12,
+  "per_condition_denominator": 258,
+  "per_cue_denominator": 516,
+  "per_request_scores_equal": true,
+  "summaries_equal": true,
+  "official_nonempty_call_scores_equal": 3034,
+  "metric_truth_table_cases": 6,
+  "parse_failures": [
+    {
+      "id": "live_simple_108-65-0__cue4__original_first",
+      "error": "invalid tool-call object"
+    }
+  ],
+  "model_loaded": false,
+  "network_used": false,
+  "teammate_independent_signoff": "PENDING"
+}

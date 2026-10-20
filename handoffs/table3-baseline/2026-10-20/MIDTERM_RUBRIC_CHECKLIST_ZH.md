@@ -1,0 +1,34 @@
+> GitHub阅读层：先读[新会话总交接](HANDOVER_NEW_SESSION_ZH.md)。完整原始证据、代码和便携重放脚本在同目录ZIP；下文重放命令均在解压后的包根目录执行。ZIP保留原准备时说明，当前发布状态以本目录README和reviews为准。
+
+# Midterm rubric逐项落实（仅依据用户3张截图）
+
+截图日期2026-10-20，来源记录在evidence/rubric，原图可在原聊天核对。只转写能看到的Midterm Report列；邻列被裁切，不跨列补全。未看到分值/权重，不保证评分。表中“齐”指证据备齐，仍需对应队友独立核验与合并报告。
+
+| 行 | 条目 | 截图可见要求 | 当前状态 | 动作/证据 |
+|---|---|---|---|---|
+| 1 | 页数/模板 | 截图明确：4–5页，需使用指定template | 待确认 | 截图URL被裁切；从课程原表打开完整链接；页数是否含参考文献未知 |
+| 2 | Abstract | 非专家能够理解problem statement | 待写 | 引用本包英文方法/结果段，改写为简洁问题+进展 |
+| 3 | Motivation & Objectives | 解释重要性/受益者，至少一个定性或定量目标 | 待写 | 目标为降低描述偏移并保持工具正确性；normalizer成果未完成 |
+| 4 | Literature Review | 引用1–2关键论文并简述与问题的联系 | 材料齐 | Faghih2025与ToolTweak2025；负责人核对与整合 |
+| 5 | Background | 至少一篇文献连接指标或baseline与问题 | 材料齐 | Faghih工具竞争及CUR/CR；BFCL参数正确性背景 |
+| 6 | Model Description | 基本说明拟议model输入/输出；鼓励diagram/table | 部分材料齐 | baseline已实现；normalizer结构拟议，训练状态待队友确认 |
+| 7 | Dataset | 标明数据来源和基本准备步骤 | 齐 | 固定upstream、258live_simple、六cue双顺序、所有输入hash |
+| 8 | Evaluation Metric | 说明指标及其相关性 | 齐 | Part3公式/边界表；说明CUR并非单纯选择率 |
+| 9 | Loss Function | 适用时简述 | baseline不适用 | 纯推理没有loss；拟议seq2seq训练loss由训练负责人确认 |
+| 10 | Experimental Depth & Iteration | 提供初步迭代证据，例如至少两个run/adjustment/configuration | 12配置证据齐 | 6cue×2order；不要把smoke/replay写成独立重复实验或训练 |
+| 11 | Baseline Selection & Evaluation | MANDATORY：实现并解释所选baseline | 实现齐，签收待做 | 完整运行/score/summary、Part3人工复核 |
+| 12 | Implemented Extensions/Experiments | 高层说明拟开展extensions/experiments | 待整合 | normalizer三backbone/teacher等当前仅计划，实际进度向队友确认 |
+| 13 | Baseline Reproduction Evidence | 初步结果/图，证明baseline结果属于本组 | 齐 | raw响应、日志、revision/hash、主图/顺序图、代表案例 |
+| 14 | Results | 鼓励初步结果/进度指标，如样本输出/早期图 | 齐 | 六行表、3096/3096、失败统计及两张图 |
+| 15 | Error / Failure Case Analysis | 截图对应midterm格为空，未见额外明确要求 | 已备材料 | 提供唯一parse failure与其他错误例；不声称额外mandatory |
+| 16 | Sensitivity / Ablation Analysis | 截图对应midterm格为空，未见额外明确要求 | 现有条件对比齐 | cue/order为现有设置分析；未运行normalizer消融/多seed |
+| 17 | Discussion | 简述已有挑战及后续风险 | 材料齐 | 强顺序影响、CR差异、后端不同、后续泄漏和over-normalization |
+| 18 | Future Directions | 识别2–3个具体下一步 | 待全组确认 | Part3签收；group/style split；normalizer统一评估含clean control |
+| 19 | Conclusion | 截图对应midterm格为空 | 待全组编写 | 简短总结当前证据与边界，别补造官方分值 |
+| 20 | Bonus Visualization | Optional；midterm格为空 | 图已备 | 主对照+顺序图；不保证bonus分 |
+| 21 | Bonus Extra Experimental Exploration | Optional；midterm格为空 | 未新增 | 本轮不启动额外推理/训练 |
+| 22 | Bibliography | 所有被引用工作均给引用（截图写2–3 minimum） | 3项来源齐 | REFERENCES.bib；1–2 key papers要求与总引用数要求分别满足 |
+| 23 | Team Contributions | 提供基本角色分工 | 姓名分工待确认 | 填当前真实贡献，不照搬proposal写作分工 |
+| 24 | GitHub | 包含GitHub链接 | 链接齐 | https://github.com/Cassiebxy/intro_dl_Team_Project；本包已获用户批准发布，仍须Part3独立复核 |
+
+特别注意：页数4–5明确；参考文献是否计页、完整Overleaf链接、deadline与提交方式需查原课程通知。截图中空白的error/ablation/conclusion/bonus格不能被推断为新的强制细则。未对外发布本交接包。

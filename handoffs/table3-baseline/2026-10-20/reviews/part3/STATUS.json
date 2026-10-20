@@ -1,0 +1,12 @@
+{
+  "technical_review_status": "PENDING",
+  "reviewer": null,
+  "reviewer_type": null,
+  "human_signoff": "PENDING",
+  "source_bundle_sha256": "7523548350c7fe67091efd1ea5b13027ee04da8927905897543f82f8534b283a",
+  "source_manifest_sha256": "691ba4a65d6d156005bc358eb99d514a4c698e784d21b49458a73bb07bdddc2b",
+  "verification_output": null,
+  "scores_changed": null,
+  "blocking_issues": null,
+  "last_updated": "2026-10-20"
+}

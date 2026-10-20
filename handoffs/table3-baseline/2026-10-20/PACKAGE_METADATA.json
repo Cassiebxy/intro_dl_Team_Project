@@ -1,0 +1,14 @@
+{
+  "package": "TABLE3_BASELINE_HANDOVER_2026-10-20.zip",
+  "sha256": "7523548350c7fe67091efd1ea5b13027ee04da8927905897543f82f8534b283a",
+  "bytes": 4404106,
+  "extracted_root": "TABLE3_BASELINE_HANDOVER_2026-10-20",
+  "inner_manifest_sha256": "691ba4a65d6d156005bc358eb99d514a4c698e784d21b49458a73bb07bdddc2b",
+  "source_run": "baseline-table3-qwen7b-20261020-mps",
+  "prepared_date": "2026-10-20",
+  "requests": 3096,
+  "status": "RUN_COMPLETE; AUTOMATED_REPLAY_PASS; PART3_INDEPENDENT_REVIEW_PENDING",
+  "archive_immutable": true,
+  "browsable_layer": "docs/tables/figures only; evidence/code/portable replay are inside ZIP",
+  "original_bundle_notice": "ZIP retains its original local-preparation wording and original run paths as provenance; current publication/review status is in HANDOVER_NEW_SESSION_ZH.md and reviews/."
+}
