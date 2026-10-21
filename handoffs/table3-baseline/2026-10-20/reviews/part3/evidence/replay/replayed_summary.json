@@ -1,0 +1,74 @@
+[
+  {
+    "cue_id": 1,
+    "denominator": 516,
+    "completed": 516,
+    "missing": 0,
+    "edited_cur": 0.4728682170542636,
+    "original_cur": 0.23837209302325582,
+    "ratio": 1.983739837398374,
+    "cr": 0.7112403100775194,
+    "technical_failures": 0,
+    "parse_failures": 0
+  },
+  {
+    "cue_id": 2,
+    "denominator": 516,
+    "completed": 516,
+    "missing": 0,
+    "edited_cur": 0.5232558139534884,
+    "original_cur": 0.1821705426356589,
+    "ratio": 2.872340425531915,
+    "cr": 0.7054263565891473,
+    "technical_failures": 0,
+    "parse_failures": 0
+  },
+  {
+    "cue_id": 3,
+    "denominator": 516,
+    "completed": 516,
+    "missing": 0,
+    "edited_cur": 0.5213178294573644,
+    "original_cur": 0.18604651162790697,
+    "ratio": 2.8020833333333335,
+    "cr": 0.7073643410852714,
+    "technical_failures": 0,
+    "parse_failures": 0
+  },
+  {
+    "cue_id": 4,
+    "denominator": 516,
+    "completed": 516,
+    "missing": 0,
+    "edited_cur": 0.5465116279069767,
+    "original_cur": 0.16472868217054262,
+    "ratio": 3.3176470588235296,
+    "cr": 0.7112403100775194,
+    "technical_failures": 0,
+    "parse_failures": 1
+  },
+  {
+    "cue_id": 5,
+    "denominator": 516,
+    "completed": 516,
+    "missing": 0,
+    "edited_cur": 0.5891472868217055,
+    "original_cur": 0.1182170542635659,
+    "ratio": 4.983606557377049,
+    "cr": 0.7073643410852714,
+    "technical_failures": 0,
+    "parse_failures": 0
+  },
+  {
+    "cue_id": 6,
+    "denominator": 516,
+    "completed": 516,
+    "missing": 0,
+    "edited_cur": 0.6124031007751938,
+    "original_cur": 0.09883720930232558,
+    "ratio": 6.196078431372549,
+    "cr": 0.7112403100775194,
+    "technical_failures": 0,
+    "parse_failures": 0
+  }
+]

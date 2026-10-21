@@ -1,0 +1,406 @@
+[
+  {
+    "name": "empty",
+    "calls": [],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "original_only",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "actual": [
+      1,
+      0,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "edited_only",
+    "calls": [
+      {
+        "ns.f2": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      0,
+      1,
+      1
+    ],
+    "actual": [
+      0,
+      1,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "both_correct",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      },
+      {
+        "ns.f2": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      1,
+      1,
+      1
+    ],
+    "actual": [
+      1,
+      1,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "repeated_correct_counts_once",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      },
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "actual": [
+      1,
+      0,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "same_tool_correct_then_wrong",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      },
+      {
+        "ns.f1": {
+          "x": 8
+        }
+      }
+    ],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "wrong_then_correct_still_wrong",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 8
+        }
+      },
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "one_tool_mixed_other_correct",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      },
+      {
+        "ns.f1": {
+          "x": 8
+        }
+      },
+      {
+        "ns.f2": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      0,
+      1,
+      1
+    ],
+    "actual": [
+      0,
+      1,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "correct_original_wrong_edited",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      },
+      {
+        "ns.f2": {
+          "x": 8
+        }
+      }
+    ],
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "actual": [
+      1,
+      0,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "known_correct_plus_unknown",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7
+        }
+      },
+      {
+        "ns.f": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "actual": [
+      1,
+      0,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "unknown_only",
+    "calls": [
+      {
+        "ns.f": {
+          "x": 7
+        }
+      }
+    ],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "string_instead_of_integer",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": "7"
+        }
+      }
+    ],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "bool_instead_of_integer",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": true
+        }
+      }
+    ],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "missing_required",
+    "calls": [
+      {
+        "ns.f1": {}
+      }
+    ],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "unexpected_parameter",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7,
+          "extra": 9
+        }
+      }
+    ],
+    "expected": [
+      0,
+      0,
+      0
+    ],
+    "actual": [
+      0,
+      0,
+      0
+    ],
+    "pass": true
+  },
+  {
+    "name": "BFCL_string_normalization",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7,
+          "label": "APRIL-1 2024"
+        }
+      }
+    ],
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "actual": [
+      1,
+      0,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "integer_allowed_for_float",
+    "calls": [
+      {
+        "ns.f1": {
+          "x": 7,
+          "amount": 7
+        }
+      }
+    ],
+    "expected": [
+      1,
+      0,
+      1
+    ],
+    "actual": [
+      1,
+      0,
+      1
+    ],
+    "pass": true
+  },
+  {
+    "name": "reverse_roles_with_dotted_name",
+    "pass": true
+  },
+  {
+    "name": "schema_optional_but_expected_not_optional",
+    "pass": true
+  },
+  {
+    "name": "missing_denominator_and_undefined_ratio",
+    "pass": true
+  }
+]

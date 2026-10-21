@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-10-21T16:34:38.333300-04:00",
+  "timezone": "America/New_York",
+  "source_commit": "1505fd7ea320f9a6c6047b1787bdc111e932ae8e",
+  "reviewer": "Codex assistant",
+  "reviewer_type": "assistant",
+  "human_signoff": "PENDING",
+  "python_executable": "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3",
+  "python_version": "3.13.1 (v3.13.1:06714517797, Dec  3 2024, 14:00:22) [Clang 15.0.0 (clang-1500.3.9.4)]",
+  "platform": "macOS-15.6.1-arm64-arm-64bit-Mach-O",
+  "commands_executed": [
+    {
+      "working_directory": "TABLE3_BASELINE_HANDOVER_2026-10-20",
+      "command": "python3 -B -X utf8 -S scripts/verify_and_replay.py --output ../reviews/part3/evidence/replay",
+      "exit_code": 0
+    },
+    {
+      "working_directory": ".",
+      "command": "python3 -B -X utf8 -S reviews/part3/evidence/independent_audit.py",
+      "exit_code": 0
+    }
+  ],
+  "paths_relative_to": "handoffs/table3-baseline/2026-10-20",
+  "source_zip_sha256": "7523548350c7fe67091efd1ea5b13027ee04da8927905897543f82f8534b283a",
+  "source_manifest_sha256": "691ba4a65d6d156005bc358eb99d514a4c698e784d21b49458a73bb07bdddc2b",
+  "fixed_files_unchanged_after_review": true,
+  "fixed_file_count": 87,
+  "scripts": {
+    "portable_replay": "c58808f7348f525bad493a30af81c2925a54a0ab4c6c3ea8f93089d4a1fd18ce",
+    "supplementary_audit": "c4cba366555213e19242dd12f824f5e3e9cc33150dcc6cc508386ab3bba8b3c8"
+  },
+  "evidence_sha256": {
+    "evidence/CASE_REVIEW.md": "f645c18d1eead7035a38c7c3cf0fa31319baa7a7a4b98ead482faa5e91544bf4",
+    "evidence/audit_result.json": "1317aeebabb083d54f37cf61d7d19f70174eea770ec0a0e1908fdc8136cf7390",
+    "evidence/independent_audit.py": "c4cba366555213e19242dd12f824f5e3e9cc33150dcc6cc508386ab3bba8b3c8",
+    "evidence/metric_boundary_results.json": "a092853b578ebf5a7d14977803fadc0e6b4f8847c9be9e886647c4c386e18018",
+    "evidence/replay/replayed_scores.jsonl": "bab8cdebbd3d11e9b4cc85f7af6e2c75054411febdffe77ee44e291a52aeccf4",
+    "evidence/replay/replayed_summary.json": "4cf39facfd079d42f7050fe9cf0b35c3422b3f87defb9f4b2fb55320c61a0a17",
+    "evidence/replay/verification_result.json": "e0940e03ab28d9c3e51298e620a86886a9c37f4e87e7065ce1fd3dc6da9a1fe0",
+    "evidence/sampled_cases.json": "cbb8a2931d76614b48f13309093af70373ce8723b7c7a2ef03fcfee68d56756a"
+  },
+  "model_loaded": false,
+  "gpu_used": false,
+  "network_used_by_verification": false,
+  "scores_changed": false,
+  "original_archive_modified": false,
+  "remote_changes_performed": false
+}
