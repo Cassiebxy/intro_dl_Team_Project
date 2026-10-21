@@ -1,0 +1,6 @@
+category,count,unit,denominator,pct
+at_least_one_correct_tool,2195,request,3096,70.89793281653746
+known_tool_argument_failure,812,request,3096,26.22739018087855
+no_tool_call,61,request,3096,1.970284237726098
+unknown_tool_name,27,request,3096,0.872093023255814
+parse_error,1,request,3096,0.03229974160206719

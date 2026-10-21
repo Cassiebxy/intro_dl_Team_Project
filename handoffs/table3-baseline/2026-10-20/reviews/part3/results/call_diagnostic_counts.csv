@@ -1,0 +1,12 @@
+category,count,unit
+valid_call,2197,parsed call; not request
+value_error:string,582,parsed call; not request
+value_error:others,40,parsed call; not request
+unknown tool,27,parsed call; not request
+value_error:dict_key,44,parsed call; not request
+value_error:dict_value,24,parsed call; not request
+simple_function_checker:missing_required,14,parsed call; not request
+value_error:list/tuple,83,parsed call; not request
+simple_function_checker:missing_optional,11,parsed call; not request
+type_error:simple,12,parsed call; not request
+simple_function_checker:unexpected_param,4,parsed call; not request

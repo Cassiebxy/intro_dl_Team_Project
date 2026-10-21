@@ -1,0 +1,74 @@
+{
+  "checked_at_utc": "2026-10-21 20:40:00 UTC",
+  "repository": "kazemf78/llm-unreliable-tool-preferences",
+  "commit": "05be5f136f00fe66acf0aa853d7bcd44c300946c",
+  "method": "Compare local Git blob SHA1 (blob header + bytes) with GitHub fetch_file SHA at the pinned commit; SHA256 also checked by the offline bundle manifest.",
+  "checks": [
+    {
+      "path": "data/BFCL_v3_live_simple.json",
+      "local_git_blob_sha": "2c449440319c4aef6e4b908803b3471ddff2ec8f",
+      "local_sha256": "10e5cedb6dc73cd16bc430755643c658d6032a69363dfc41a22a84988eaa312a",
+      "remote_git_blob_sha": "2c449440319c4aef6e4b908803b3471ddff2ec8f",
+      "pass": true
+    },
+    {
+      "path": "data/possible_answer/BFCL_v3_live_simple.json",
+      "local_git_blob_sha": "33b95487d895b4e5684423e8aaf426e9621c3b4c",
+      "local_sha256": "4a1988780cdd8a723967587614cb84a9f53aa5d6fd37f83c78a0dd7acc2f3d15",
+      "remote_git_blob_sha": "33b95487d895b4e5684423e8aaf426e9621c3b4c",
+      "pass": true
+    },
+    {
+      "path": "bfcl/model_handler/local_inference/qwen_fc.py",
+      "local_git_blob_sha": "10dd8a662591d33c8223b2931621fa7fd512a7ec",
+      "local_sha256": "11cbd5f4f0df7ce9bc1f5bb101170a98bccf7025667d92279cfbe5927f4a502a",
+      "remote_git_blob_sha": "10dd8a662591d33c8223b2931621fa7fd512a7ec",
+      "pass": true
+    },
+    {
+      "path": "bfcl/model_handler/utils.py",
+      "local_git_blob_sha": "67d1aaf05bdabae5a6823d3299b2b685919c632f",
+      "local_sha256": "b58565e2684101e6323036d9dea839d1d4728a17b7a53738d1de7940eed73b54",
+      "remote_git_blob_sha": "67d1aaf05bdabae5a6823d3299b2b685919c632f",
+      "pass": true
+    },
+    {
+      "path": "bfcl/eval_checker/ast_eval/ast_checker.py",
+      "local_git_blob_sha": "5dd86e37bebdf912d9a22f7969add140a920180f",
+      "local_sha256": "dfafd1df38c6470631f6ab622ef65f32ce2c5effd81bae006b1d66389d67a66a",
+      "remote_git_blob_sha": "5dd86e37bebdf912d9a22f7969add140a920180f",
+      "pass": true
+    },
+    {
+      "path": "bfcl/constants/eval_config.py",
+      "local_git_blob_sha": "d6ed6283983f78708f01b4ff18cea6e7c9c42bb2",
+      "local_sha256": "0456a5dd73720222f2d62c849cf2e527cc1050e805fe41ae0a6205e42cee5766",
+      "remote_git_blob_sha": "d6ed6283983f78708f01b4ff18cea6e7c9c42bb2",
+      "pass": true
+    },
+    {
+      "path": "bfcl/constants/type_mappings.py",
+      "local_git_blob_sha": "fdbdde48402f8f2812b146f9b7341b6aae9e55b8",
+      "local_sha256": "1702fb67afbe2c492608e58e2b7d02e46381f50166b47f3c952f76e34c7cd3bd",
+      "remote_git_blob_sha": "fdbdde48402f8f2812b146f9b7341b6aae9e55b8",
+      "pass": true
+    },
+    {
+      "path": "bfcl/eval_checker/ast_eval/type_convertor/java_type_converter.py",
+      "local_git_blob_sha": "3e9a54a20bc7b2d2a3572de5174e566d3cba4e55",
+      "local_sha256": "789026a934d3399ab7c5b7297f27fd2d6bab4c7d6de67456cbe728560f89089a",
+      "remote_git_blob_sha": "3e9a54a20bc7b2d2a3572de5174e566d3cba4e55",
+      "pass": true
+    },
+    {
+      "path": "bfcl/eval_checker/ast_eval/type_convertor/js_type_converter.py",
+      "local_git_blob_sha": "8c07ab4247f32459964747fbd19d99a0480b0b26",
+      "local_sha256": "317b968cde00a90a3a46fdad9bd82dae62462250f0e43cb1418589e5c2acd53a",
+      "remote_git_blob_sha": "8c07ab4247f32459964747fbd19d99a0480b0b26",
+      "pass": true
+    }
+  ],
+  "all_match": true,
+  "network_used_for_provenance_check": true,
+  "model_loaded": false
+}
