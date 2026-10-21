@@ -1,0 +1,77 @@
+{
+  "repository": "https://github.com/kazemf78/llm-unreliable-tool-preferences",
+  "commit": "05be5f136f00fe66acf0aa853d7bcd44c300946c",
+  "files": {
+    "README.md": {
+      "sha256": "e8e4026a02c9807d518667da8893eb79369b348c13d2280bc58b50c71b7e3040",
+      "bytes": 6035
+    },
+    "modify_bfcl_func.py": {
+      "sha256": "3c5015501abbc4729b5a34e46bc22a57fcb31812c1783939714d25e98be7fcdd",
+      "bytes": 17783
+    },
+    "func_description_optim.py": {
+      "sha256": "1bfb108459292674edd19fa57d6f3917e1b69d1868a6869bbccf196db3b19add",
+      "bytes": 24206
+    },
+    "scripts/whole_pipeline.sh": {
+      "sha256": "fdd3122dda4b8a2789d59728b59f173f9b5b2e6cc21be8788d7213a574641152",
+      "bytes": 7226
+    },
+    "bfcl/model_handler/utils.py": {
+      "sha256": "b58565e2684101e6323036d9dea839d1d4728a17b7a53738d1de7940eed73b54",
+      "bytes": 30303
+    },
+    "bfcl/model_handler/api_inference/openai.py": {
+      "sha256": "9b2661b27b0f0194de3a2ed3273d19cde149fb7654897bbd62cf9706e8c29e81",
+      "bytes": 9780
+    },
+    "bfcl/model_handler/local_inference/base_oss_handler.py": {
+      "sha256": "cfe33c761d8c1005816091e25f4a0e1d55b2f586e1a8d8621f3c24ea31606b5a",
+      "bytes": 16484
+    },
+    "bfcl/model_handler/local_inference/llama.py": {
+      "sha256": "7452bd96e3114dc64043a2ea4f9411777f444f65b6028ab66ed49a9eda3f48eb",
+      "bytes": 2475
+    },
+    "bfcl/constants/default_prompts.py": {
+      "sha256": "eeaf03cb3594666b527993160d6b6b18ee219fee6b3ab1672ef71202cc9f9721",
+      "bytes": 1463
+    },
+    "bfcl/_llm_response_generation.py": {
+      "sha256": "848098c7ee24ca06fc6088ec9314f26df80098225e25429652a77de260f6c8d5",
+      "bytes": 12174
+    },
+    "data/BFCL_v3_live_simple.json": {
+      "sha256": "10e5cedb6dc73cd16bc430755643c658d6032a69363dfc41a22a84988eaa312a",
+      "bytes": 260127
+    },
+    "data/possible_answer/BFCL_v3_live_simple.json": {
+      "sha256": "4a1988780cdd8a723967587614cb84a9f53aa5d6fd37f83c78a0dd7acc2f3d15",
+      "bytes": 46971
+    },
+    "data/BFCL_v3_combined_simple_live_simple_dup2_original_endorsementLine_original_first.json": {
+      "sha256": "9eaf14da8b50f527f7be62fe6220d1df7fcb44bc4257d50f5dd238f7f2738b6e",
+      "bytes": 1057543
+    },
+    "data/possible_answer/BFCL_v3_combined_simple_live_simple_dup2_original_endorsementLine_original_first.json": {
+      "sha256": "ebe7202b224b9020f16ebacca5b8bd4b752e393e5886dc3d51dd4ee5f1d98fa7",
+      "bytes": 310689
+    },
+    "data/BFCL_v3_combined_simple_live_simple_dup2_original_endorsementLine_endorsementLine_first.json": {
+      "sha256": "b4f846e13d9c3f2d4f7d19a321a2f734205edacd319e98ff8a7451d86eb9c783",
+      "bytes": 1062149
+    },
+    "data/possible_answer/BFCL_v3_combined_simple_live_simple_dup2_original_endorsementLine_endorsementLine_first.json": {
+      "sha256": "2680755d4aa0e42814e2813fbd3988ae58d47e0dc568a533dc94f06211c6e19a",
+      "bytes": 315295
+    }
+  },
+  "paper": {
+    "origin": "User-uploaded ACL Anthology PDF",
+    "url": "https://aclanthology.org/2025.emnlp-main.1060.pdf",
+    "path": "paper/2025.emnlp-main.1060.pdf",
+    "sha256": "bf2fb1bba7d9d028348bc9d8991d3ed01f78437c834fa4106d3abae048cbbac5",
+    "bytes": 219942
+  }
+}
