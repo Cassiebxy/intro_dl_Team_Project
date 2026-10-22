@@ -1,17 +1,27 @@
-# Table 3 baseline交接入口
+# Table 3 baseline evidence and handoff
 
-本目录已获用户授权发布。**先读[零上下文总交接](HANDOVER_NEW_SESSION_ZH.md)，然后Part3复核，Part4检查Part3并整合midterm。**
+**October 22, 2026: baseline COMPLETE; technical review and human signoff PASS; midterm report available.**
 
-1. [Part3：评分与验证交接](PART3_SCORING_VALIDATION_HANDOVER_ZH.md)
-2. [Part4：论文对照与midterm交接](PART4_PAPER_COMPARISON_MIDTERM_HANDOVER_ZH.md)
-3. [评分标准清单](MIDTERM_RUBRIC_CHECKLIST_ZH.md)
-4. [Part3启动prompt](prompts/PART3_FIRST_PROMPT_ZH.md) / [Part4启动prompt](prompts/PART4_FIRST_PROMPT_ZH.md)
-5. [Part3当前状态](reviews/part3/STATUS.json) / [Part3遗留项](reviews/part3/LEFTOVERS.md)
-6. [Part4当前状态](reviews/part4/STATUS.json) / [Part4遗留项](reviews/part4/LEFTOVERS.md)
+Start with [current status](CURRENT_STATUS.md) or the [midterm report](../../../reports/midterm/README.md). Review the [paper comparison](tables/PAPER_VS_LOCAL_TABLE3.md), [order effects](tables/ORDER_EFFECTS.md), [technical review](reviews/part3/REVIEW_REPORT.md), and [human signoff](reviews/part3/HUMAN_SIGNOFF.md).
 
-当前：3096次真实推理及自动评分完成；0技术错误、0截断、1解析失败保留分母。Part3独立技术复核、人工签收和midterm最终整合尚未完成。
+## Offline reproduction
 
-**完整证据：[下载ZIP](TABLE3_BASELINE_HANDOVER_2026-10-20.zip)**（GitHub文件页点击Download raw），或使用[直接下载链接](https://raw.githubusercontent.com/Cassiebxy/intro_dl_Team_Project/main/handoffs/table3-baseline/2026-10-20/TABLE3_BASELINE_HANDOVER_2026-10-20.zip)。约4.4MB压缩后，内含约38MB文件，不含模型权重/虚拟环境/凭据。
-先用[PACKAGE_METADATA.json](PACKAGE_METADATA.json)核对ZIP SHA256，再解压；之后运行内置脚本，不需要模型、网络或pip安装。
+[Download the evidence ZIP](TABLE3_BASELINE_HANDOVER_2026-10-20.zip) (GitHub file page → Download raw). It contains frozen inputs, all 3,096 raw responses and scores, source snapshots, and portable replay. It excludes model weights, virtual environments, and credentials.
 
-GitHub直接可读的tables/figures与ZIP内文件相同；GitHub阅读层的交接文加了发布/接手说明，不能拿它们替换ZIP内部文件后再要求原MANIFEST通过。保持ZIP证据不变，新的复核产物写入reviews/。
+Verify the archive against [PACKAGE_METADATA.json](PACKAGE_METADATA.json), then extract it without replacing internal files with the browsable documentation. From the extracted `TABLE3_BASELINE_HANDOVER_2026-10-20` directory run:
+
+```bash
+python3 -B -X utf8 -S scripts/verify_and_replay.py --output replay_check
+```
+
+This standard-library script checks saved evidence without loading a model or using the network. Inspect `replay_check/verification_result.json`.
+
+## Evidence and historical handoffs
+
+- [Per-request scores](reviews/part3/results/per_request_scores.csv), [cue summary](reviews/part3/results/summary_by_cue.csv), [order summary](reviews/part3/results/summary_by_order.csv), [failure counts](reviews/part3/results/response_failure_counts.csv).
+- [Scoring edge cases](reviews/part3/evidence/CASE_REVIEW.md).
+- [Zero-context handover](HANDOVER_NEW_SESSION_ZH.md), [Part 3 brief](PART3_SCORING_VALIDATION_HANDOVER_ZH.md), [Part 4 brief](PART4_PAPER_COMPARISON_MIDTERM_HANDOVER_ZH.md), [rubric checklist](MIDTERM_RUBRIC_CHECKLIST_ZH.md).
+- [Part 3 publication note](reviews/part3/PUBLICATION_NOTE.md) explains historical local-only labels without modifying the signed delivery.
+- [Part 4 status](reviews/part4/STATUS.json) and [remaining report polish](reviews/part4/LEFTOVERS.md).
+
+The archive is immutable. Original prompts describe work that has since completed; consult [CURRENT_STATUS.md](CURRENT_STATUS.md) before continuing.

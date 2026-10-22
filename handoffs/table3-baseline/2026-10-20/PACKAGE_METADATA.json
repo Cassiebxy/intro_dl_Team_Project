@@ -7,8 +7,10 @@
   "source_run": "baseline-table3-qwen7b-20261020-mps",
   "prepared_date": "2026-10-20",
   "requests": 3096,
-  "status": "RUN_COMPLETE; AUTOMATED_REPLAY_PASS; PART3_INDEPENDENT_REVIEW_PENDING",
+  "status": "BASELINE_COMPLETE; AUTOMATED_REPLAY_PASS; PART3_TECHNICAL_AND_HUMAN_SIGNOFF_PASS; MIDTERM_REPORT_AVAILABLE",
   "archive_immutable": true,
-  "browsable_layer": "docs/tables/figures only; evidence/code/portable replay are inside ZIP",
-  "original_bundle_notice": "ZIP retains its original local-preparation wording and original run paths as provenance; current publication/review status is in HANDOVER_NEW_SESSION_ZH.md and reviews/."
+  "browsable_layer": "Documentation, tables, figures, published Part3 review/results; complete frozen evidence/code/replay inside ZIP",
+  "original_bundle_notice": "ZIP retains its original local-preparation wording and original run paths as provenance; current publication/review status is in HANDOVER_NEW_SESSION_ZH.md and reviews/.",
+  "current_status_document": "CURRENT_STATUS.md",
+  "status_updated_date": "2026-10-22"
 }

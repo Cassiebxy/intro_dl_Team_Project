@@ -1,3 +1,5 @@
+> **2026-10-22 更新：baseline、Part 3 技术复核及人工签收均已完成，midterm 报告已发布。** 下文保留最初任务清单；“待复核/待整合”以[当前状态](CURRENT_STATUS.md)和[报告入口](../../../reports/midterm/README.md)为准。
+
 # 零上下文新会话交接｜Table 3 baseline → Part 3 / Part 4
 
 更新时间：2026-10-20（America/New_York）。这份文件是新会话入口，不要求你读旧聊天。GitHub仓库：https://github.com/Cassiebxy/intro_dl_Team_Project；交接目录：`handoffs/table3-baseline/2026-10-20/`（[在线入口](https://github.com/Cassiebxy/intro_dl_Team_Project/tree/main/handoffs/table3-baseline/2026-10-20)）。

@@ -1,79 +1,78 @@
-# Intro DL Team Project
+# Mitigating Tool Preference Bias in LLM Agents
+## Trainable Description Normalization — CMU 11-785 Team Project
 
-**Mitigating Tool Preference Bias in LLM Agents via Trainable Description Normalization**
+We study whether assertive wording in a tool description changes an LLM agent's choice between functionally equivalent tools. Our completed baseline reproduces the Qwen2.5-7B experiment from Table 3 of *Tool Preferences in Agentic LLMs Are Unreliable*. The next stage will evaluate trainable description normalization while preserving tool functionality and parameter schemas.
 
-CMU 11-785 team project. We will reproduce tool-preference shifts caused by edited tool descriptions, then train FLAN-T5-small, FLAN-T5-base, and BART-base to normalize descriptions while preserving tool functionality, names, and parameter schemas.
+**Status — October 22, 2026:** the Table 3 baseline is complete, including the full run, offline score replay, technical review, and human signoff. The midterm report is available. Normalizer training and evaluation remain planned.
 
-## Current status
+## Start here
 
-_Last updated: October 20, 2026 (America/New_York)._
+- **[Midterm report and source](reports/midterm/README.md)** — motivation, methodology, baseline results, limitations, and next steps.
+- **[Paper comparison](handoffs/table3-baseline/2026-10-20/tables/PAPER_VS_LOCAL_TABLE3.md)** and **[results by presentation order](handoffs/table3-baseline/2026-10-20/tables/ORDER_EFFECTS.md)**.
+- **[Scoring review](handoffs/table3-baseline/2026-10-20/reviews/part3/REVIEW_REPORT.md)** and **[human signoff](handoffs/table3-baseline/2026-10-20/reviews/part3/HUMAN_SIGNOFF.md)**.
+- **[Reproducibility and evidence](handoffs/table3-baseline/2026-10-20/README.md)** — frozen inputs, raw responses, scores, source snapshots, and portable offline replay.
+- **[Current project status](handoffs/table3-baseline/2026-10-20/CURRENT_STATUS.md)** — supersedes outdated pending/local-only labels in historical handoffs.
 
-- **Data preparation and automated EDA:** implemented and run locally, including pinned-source validation, structural checks, role/answer diagnostics, and review exports. Automated checks do not replace the remaining human semantic/group review.
-- **Table 3 baseline:** local input construction, prompt adaptation, and scoring are implemented. All **3,096 requests** and their expected answers are frozen; **54 local tests passed**. A **20-request smoke run** completed with no technical failures, parsing failures, or output truncations. The full **3,096-request run completed on October 20, 2026 at 15:47 EDT**, and automated score replay matched the saved results. There were no technical failures or output truncations; one parsing failure remains in the denominator. **Part 3 independent review and team signoff are pending.**
-- **Description normalization:** the planned FLAN-T5-small, FLAN-T5-base, and BART-base comparison, final train/dev/test splits, and normalizer training/evaluation remain pending.
+## Completed baseline
 
-The repository now includes a dated baseline handoff with browsable documentation, result tables, figures, and a complete evidence archive. The original experiment code is included as an evidence snapshot inside that archive; it has not yet been integrated as a top-level runnable package.
-
-## Baseline overview (preliminary)
-
-We are reproducing the **Qwen2.5-7B portion of Section 2 / Table 3** in *Tool Preferences in Agentic LLMs Are Unreliable*.
-
-| Item | Current setup |
+| Component | Setup |
 |---|---|
-| Model | `Qwen/Qwen2.5-7B-Instruct`, frozen checkpoint revision; no model training |
-| Data | 258 BFCL `live_simple` cases |
-| Comparison | Two tools with identical functionality and parameter schemas; one keeps the original description and the other appends one fixed assertive cue |
-| Conditions | Six assertive cues, each tested in both original-first and edited-first presentation orders |
-| Full run size | 258 × 6 × 2 = **3,096 requests** |
-| Local runtime | Apple Silicon GPU via PyTorch MPS and Transformers; unquantized BF16 weights |
-| Metrics | Edited-tool CUR, original-tool CUR, their ratio, and CR; each cue combines both orders for a denominator of 516 |
-| Current state | Full run and automated replay complete; independent scoring review and midterm integration pending |
+| Agent | `Qwen/Qwen2.5-7B-Instruct`; no model training |
+| Checkpoint revision | `a09a35458c702b33eeacc393d103063234e8bc28` |
+| Data | 258 canonical BFCL `live_simple` cases |
+| Conditions | Six assertive cues × two presentation orders |
+| Requests | **3,096** total; 516 per cue and 258 per cue/order |
+| Tool pair | Matching functionality and parameter schemas; one description appends an assertive cue |
+| Runtime | Apple Silicon / PyTorch MPS, unquantized BF16 |
+| Run completed | October 20, 2026, 15:47 EDT |
+| Validation | All 3,096 saved scores matched offline replay; Part 3 technical review PASS and Kyrie human signoff PASS on October 21 |
+| Run health | Zero technical failures, zero output truncations; one parse failure retained in the denominator |
 
-**Metric definitions:** a tool counts toward correct usage rate (CUR) only if it is called correctly at least once and has no incorrect calls to that same tool. CR counts cases where at least one candidate tool meets that criterion. The two tools' CURs can overlap. The ratio is edited CUR divided by original CUR; it is undefined when original CUR is zero.
+## Results
 
-This stage measures description-induced tool preference before introducing our normalizer. It does not include normalizer training or the larger Table 13 comparison matrix. The local backend differs from the original CUDA/vLLM setup; those differences will be documented with the validated results.
+Percentages pool both orders. See the [full comparison CSV](handoffs/table3-baseline/2026-10-20/tables/paper_vs_local_table3.csv) for cue text and paper reference values.
 
-**Documentation plan:** keep this overview brief until the midterm report is completed, then expand it with the final protocol, reproduction instructions, verified results, and limitations.
+| Cue | Edited-tool CUR (%) | Original-tool CUR (%) | CUR ratio | CR (%) |
+|---|---:|---:|---:|---:|
+| 1 | 47.29 | 23.84 | 1.984 | 71.12 |
+| 2 | 52.33 | 18.22 | 2.872 | 70.54 |
+| 3 | 52.13 | 18.60 | 2.802 | 70.74 |
+| 4 | 54.65 | 16.47 | 3.318 | 71.12 |
+| 5 | 58.91 | 11.82 | 4.984 | 70.74 |
+| 6 | 61.24 | 9.88 | 6.196 | 71.12 |
 
-## Baseline handoff
+**Metrics:** a tool contributes to correct usage rate (CUR) if it has at least one correct call and no incorrect calls to that same tool in a request. CR is the fraction of requests where at least one candidate tool satisfies that criterion. The CURs may overlap in general. Ratio = edited CUR / original CUR; it is undefined when original CUR is zero. Parse failures remain in the fixed denominator.
 
-Start at [the October 20 Table 3 handoff](handoffs/table3-baseline/2026-10-20/README.md). A [zero-context session handover](handoffs/table3-baseline/2026-10-20/HANDOVER_NEW_SESSION_ZH.md) explains completed work, blockers, next steps, and pitfalls.
+The pooled edited-tool advantage ranges from **1.984× to 6.196×**. This is a directional reproduction with substantial order/name-label dependence: the first three cues do not favor the edited tool in the original-first condition. Tool position and name suffix are coupled, so the results do not isolate a causal position effect. Local CR is 4.08–5.86 percentage points below the paper; the cause has not been isolated. The local MPS/Transformers backend differs from the original CUDA/vLLM setup.
 
-- [Part 3 first prompt](handoffs/table3-baseline/2026-10-20/prompts/PART3_FIRST_PROMPT_ZH.md): independent scoring verification and remaining issues.
-- [Part 4 first prompt](handoffs/table3-baseline/2026-10-20/prompts/PART4_FIRST_PROMPT_ZH.md): check Part 3 evidence and leftovers before paper comparison and midterm integration.
-- [Review status and leftovers](handoffs/table3-baseline/2026-10-20/reviews/): initially pending; later sessions must read the latest versions.
+[Order effects](handoffs/table3-baseline/2026-10-20/tables/ORDER_EFFECTS.md), [failure counts](handoffs/table3-baseline/2026-10-20/reviews/part3/results/response_failure_counts.csv), and [checker edge cases](handoffs/table3-baseline/2026-10-20/reviews/part3/evidence/CASE_REVIEW.md) accompany the results. Repeated cases across conditions are paired observations, not 3,096 independent tasks.
 
-The evidence archive includes all 3,096 raw responses and scores, frozen inputs/configuration, source snapshots, and a portable offline replay script. It contains no model weights or virtual environment. Pooled edited-tool CUR exceeds original-tool CUR for all six cues, but strong order/name-label dependence remains; this is a directional reproduction with documented differences, not an exact or order-robust replication.
+## Reproduce and inspect
 
-## Repository layout
+The [evidence package](handoffs/table3-baseline/2026-10-20/README.md) contains frozen configuration, raw responses, per-request scores, source snapshots, and a standard-library offline replay script. Replay requires no model download, GPU, or paid API. Model weights and virtual environments are excluded.
 
-```text
-.
-├── README.md               # Project overview and repository guide
-├── handoffs/table3-baseline/2026-10-20/  # Baseline evidence and Part 3/4 handoff
-├── neurips_2019.sty         # LaTeX style used by the proposal
-└── proposal/
-    └── document.tex        # Project proposal source
-```
+The [data-preparation module](table3/README.md) documents upstream data construction. The complete inference/scoring implementation is preserved inside the evidence ZIP; a consolidated top-level training/evaluation package has not yet been published.
 
-The following directories are planned for publication as the local implementation is reviewed and shared:
+## Next stage
 
-| Directory | Purpose |
+1. Add clean-vs-clean controls and disentangle presentation order from tool-name labels.
+2. Finalize grouped train/dev/test splits and train the planned FLAN-T5-small, FLAN-T5-base, and BART-base normalizers.
+3. Evaluate preference reduction alongside functionality preservation and downstream CR.
+
+These are planned extensions; the current results contain no trained normalizer.
+
+## Repository guide
+
+| Path | Contents |
 |---|---|
-| `src/intro_dl/` | Data preparation, description normalization, downstream evaluation, and reporting |
-| `configs/` | Shared protocol and model/experiment configurations |
-| `scripts/` | Setup and experiment entry points |
-| `tests/` | Data integrity, evaluation, and pipeline checks |
-| `manifests/` | Data provenance, splits, and experiment case definitions |
-| `locks/` | Dependency versions verified for each runtime environment |
-| `docs/` | Setup instructions, evaluation protocol, and reproduction notes |
-| `paper/` | Final report source and publication figures |
-| `results/summary/` | Verified metrics, plots, and run references |
-
-These top-level implementation paths are not yet published; selected source snapshots and the completed run's raw evidence are available inside the dated handoff archive. Model weights, checkpoints, credentials, virtual environments, and personal drafts stay outside the public repository.
+| [`reports/midterm/`](reports/midterm/README.md) | Current report and source links |
+| [`table3/`](table3/README.md) | Data preparation, pinned sources, generated inputs, validation |
+| [`handoffs/table3-baseline/2026-10-20/`](handoffs/table3-baseline/2026-10-20/README.md) | Baseline evidence, tables, figures, scoring review, historical handoffs |
+| [`proposal/document.tex`](proposal/document.tex) | Original proposal and initial plan |
 
 ## References
 
 - [Tool Preferences in Agentic LLMs Are Unreliable](https://aclanthology.org/2025.emnlp-main.1060/)
 - [Original paper's code and data](https://github.com/kazemf78/llm-unreliable-tool-preferences)
 
+See the [report bibliography](reports/midterm/README.md) and [source attribution](handoffs/table3-baseline/2026-10-20/SOURCES_AND_ATTRIBUTION.md) for additional references and provenance.

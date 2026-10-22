@@ -1,9 +1,17 @@
 {
-  "status": "PENDING",
-  "part3_check": "NOT_STARTED",
-  "part3_source_commit": null,
+  "status": "MIDTERM_REPORT_AVAILABLE",
+  "baseline_status": "COMPLETE",
+  "part3_check": "PUBLISHED_EVIDENCE_CONSISTENCY_CHECK_PASS",
+  "part3_source_commit": "2ea3f2f2551d2ee11e7bad652428832aca1b491e",
   "source_bundle_sha256": "7523548350c7fe67091efd1ea5b13027ee04da8927905897543f82f8534b283a",
-  "report_state": "NOT_STARTED",
-  "human_contributions_confirmed": false,
-  "last_updated": "2026-10-20"
+  "report_state": "COMPLETED_REPORT_PUBLISHED",
+  "report_entry": "../../../../../reports/midterm/README.md",
+  "human_contributions_confirmed": null,
+  "human_contributions_note": "Names and contributions are stated in the team report; not independently re-confirmed during documentation maintenance.",
+  "course_submission_verified": false,
+  "normalizer_state": "PLANNED",
+  "last_updated": "2026-10-22",
+  "review_scope": "Repository documentation and published evidence consistency; no new inference or score replay.",
+  "historical_part4_audit_record": "No separate completed Part4 audit record was present; PART3_CHECK.md records the October22 documentation check.",
+  "remaining_items": "LEFTOVERS.md"
 }

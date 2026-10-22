@@ -1,14 +1,18 @@
-# Part4对Part3的前置检查
+# Part 3 evidence check for report integration
 
-状态：NOT_STARTED，以下是待填写模板。
+Date: October 22, 2026. Reviewer: Codex assistant. Scope: repository maintenance and consistency of published records, not a new independent scoring run.
 
-- Part3的GitHub commit/review文件版本：待填写
-- Part3源ZIP/MANIFEST哈希是否与当前PACKAGE_METADATA一致：待核验
-- Part3 verification JSON是否真实存在，计数/结果/环境是否一致：待核验
-- Part3抽查与parse失败、分母、order结论是否有证据：待核验
-- Part3 LEFTOVERS的blocking/nonblocking逐项及对报告影响：待核验
-- 自己再次重放/抽查的命令和结果（若可运行）：待填写
-- 技术复核结论与human_signoff状态应分开：待填写
-- 是否允许在draft中使用这版分数、仍需标注的局限：待填写
+Source inspected: commit `2ea3f2f2551d2ee11e7bad652428832aca1b491e`.
 
-不能只因STATUS写PASS就跳过核对；若缺少Part3结果或有影响分数的blocker，明确标“评分待确认”，不伪造签收。
+- Part 3 STATUS records technical PASS, Kyrie human PASS, no blocking issues, and unchanged original scores.
+- Its source ZIP SHA256 matches PACKAGE_METADATA: `7523548350c7fe67091efd1ea5b13027ee04da8927905897543f82f8534b283a`.
+- Its source manifest SHA256 matches PACKAGE_METADATA and replay output: `691ba4a65d6d156005bc358eb99d514a4c698e784d21b49458a73bb07bdddc2b`.
+- Published replay JSON records 3,096 unique requests, 12 conditions, denominators 258/order and 516/cue, equal per-request scores and summaries, and 3,034 official nonempty-call comparisons.
+- Published audit JSON records PASS, 3,096 strict JSON/BFCL checks, six pooled rows and twelve order rows, and original scores retained.
+- CASE_REVIEW documents role/name mapping, phantom/alias handling, the parse failure, empty-array checker behavior, optional-answer behavior, and multi-call cases.
+- Earlier audit/replay PENDING fields predate the later human signoff. Local-only publication labels in the signed delivery are historical; the review is now on GitHub.
+
+Conclusion: the published baseline scores have a traceable completed review and human acceptance. Retain order/name confounding, paired-case dependence, backend differences, checker caveats, and the parse failure in report interpretation.
+
+The published paper-comparison table records an October20 verification against the formal paper PDF. This maintenance check does not claim a new independent re-extraction of the paper's reference values or a reconstruction of the team's historical Part4 workflow. A completed five-page report is now available at the [report entry](../../../../../reports/midterm/README.md).
+

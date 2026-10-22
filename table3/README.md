@@ -1,3 +1,5 @@
+> **Project status — October 22, 2026:** the full baseline and scoring review are complete; [results and evidence](../handoffs/table3-baseline/2026-10-20/README.md) and the [midterm report](../reports/midterm/README.md) are available. This page documents data preparation at its original stage. Statements below about inference/integration not being run apply to that component snapshot. Use the frozen run archive for actual model-facing inputs and scoring implementation.
+
 # Table 3: Data and Experimental Setup
 
 **Data preparation and offline validation are complete: 258 base cases × 6 cues × 2 presentation orders = 3,096 inputs per model.**

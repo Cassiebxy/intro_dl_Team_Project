@@ -1,3 +1,5 @@
+> **2026-10-22 更新：baseline、Part 3 技术复核及人工签收均已完成，midterm 报告已发布。** 下文保留最初任务清单；“待复核/待整合”以[当前状态](CURRENT_STATUS.md)和[报告入口](../../../reports/midterm/README.md)为准。
+
 > GitHub阅读层：先读[新会话总交接](HANDOVER_NEW_SESSION_ZH.md)。完整原始证据、代码和便携重放脚本在同目录ZIP；下文重放命令均在解压后的包根目录执行。ZIP保留原准备时说明，当前发布状态以本目录README和reviews为准。
 
 # Part 4｜论文对照与midterm报告整合交接
