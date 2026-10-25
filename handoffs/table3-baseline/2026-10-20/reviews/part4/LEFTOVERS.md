@@ -1,19 +1,14 @@
-# Part 4 current status and remaining items
+# Part 4 status and final-stage handoff
 
-Updated October 22, 2026. This replaces the initial empty task checklist.
+Updated October24, 2026.
 
 Completed:
-- Full baseline run, score replay, technical review, and Kyrie human acceptance.
-- Published six-cue comparison, order effects, failure analysis, and supporting evidence.
-- Team midterm report available: five pages, including contributions and references; normalizer work remains planned.
-- Repository overview, current status, and report navigation updated.
+- Baseline run, score replay, technical review, and Kyrie human acceptance.
+- Six-cue comparison, order effects, failure analysis, and supporting evidence.
+- Team-designated final five-page midterm report, now published at the [canonical report path](../../../../../reports/midterm/midterm_report.pdf).
+- GitHub link and contribution punctuation/placeholder cleanup in the supplied final PDF.
+- Repository documentation and report navigation synchronized.
 
-Before course submission:
-- Add the GitHub repository URL to the current report PDF.
-- Fix the missing closing parenthesis in the contributions section and perform final layout proofreading.
-- Team to verify exact required template, page-count policy, deadline/submission channel, and final contribution wording.
+The suggested framework diagram was deferred from midterm because of the page limit. It is a final-report follow-up, not an outstanding midterm requirement. See the dedicated [final report checklist](../../../../../reports/final/FINAL_REPORT_FOLLOWUPS.md) for the diagram, method/data/formula clarifications, controls, training, and publication tasks.
 
-No baseline execution/scoring blocker remains. The [October22 evidence consistency check](PART3_CHECK.md) describes its limited scope; it is not a new inference run or score replay. Course submission is not verified.
-
-Future experiments are listed in the [project README](../../../../../README.md#next-stage).
-
+No baseline execution/scoring blocker remains. The accepted scores and evidence are unchanged. Normalizer training is still planned; matching final report source and course submission status have not been independently verified.

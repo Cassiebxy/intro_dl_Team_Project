@@ -3,11 +3,11 @@
 
 We study whether assertive wording in a tool description changes an LLM agent's choice between functionally equivalent tools. Our completed baseline reproduces the Qwen2.5-7B experiment from Table 3 of *Tool Preferences in Agentic LLMs Are Unreliable*. The next stage will evaluate trainable description normalization while preserving tool functionality and parameter schemas.
 
-**Status — October 22, 2026:** the Table 3 baseline is complete, including the full run, offline score replay, technical review, and human signoff. The midterm report is available. Normalizer training and evaluation remain planned.
+**Status — October 24, 2026:** the Table 3 baseline is complete, including the full run, offline score replay, technical review, and human signoff. The team-designated final midterm report is available; the PDF is preserved as supplied. Normalizer training and evaluation remain planned.
 
 ## Start here
 
-- **[Midterm report and source](reports/midterm/README.md)** — motivation, methodology, baseline results, limitations, and next steps.
+- **[Final midterm report](reports/midterm/midterm_report.pdf)** ([version notes and earlier source](reports/midterm/README.md)) — motivation, methodology, baseline results, limitations, and next steps.
 - **[Paper comparison](handoffs/table3-baseline/2026-10-20/tables/PAPER_VS_LOCAL_TABLE3.md)** and **[results by presentation order](handoffs/table3-baseline/2026-10-20/tables/ORDER_EFFECTS.md)**.
 - **[Scoring review](handoffs/table3-baseline/2026-10-20/reviews/part3/REVIEW_REPORT.md)** and **[human signoff](handoffs/table3-baseline/2026-10-20/reviews/part3/HUMAN_SIGNOFF.md)**.
 - **[Reproducibility and evidence](handoffs/table3-baseline/2026-10-20/README.md)** — frozen inputs, raw responses, scores, source snapshots, and portable offline replay.
@@ -54,6 +54,8 @@ The [evidence package](handoffs/table3-baseline/2026-10-20/README.md) contains f
 The [data-preparation module](table3/README.md) documents upstream data construction. The complete inference/scoring implementation is preserved inside the evidence ZIP; a consolidated top-level training/evaluation package has not yet been published.
 
 ## Next stage
+
+See [final report follow-ups](reports/final/FINAL_REPORT_FOLLOWUPS.md) for the planned framework diagram, reporting clarifications, and open research items. The diagram was deferred from midterm because of the page limit.
 
 1. Add clean-vs-clean controls and disentangle presentation order from tool-name labels.
 2. Finalize grouped train/dev/test splits and train the planned FLAN-T5-small, FLAN-T5-base, and BART-base normalizers.

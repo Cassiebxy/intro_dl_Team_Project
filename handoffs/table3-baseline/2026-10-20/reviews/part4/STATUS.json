@@ -1,17 +1,21 @@
 {
-  "status": "MIDTERM_REPORT_AVAILABLE",
+  "status": "FINAL_MIDTERM_REPORT_PUBLISHED",
   "baseline_status": "COMPLETE",
   "part3_check": "PUBLISHED_EVIDENCE_CONSISTENCY_CHECK_PASS",
   "part3_source_commit": "2ea3f2f2551d2ee11e7bad652428832aca1b491e",
   "source_bundle_sha256": "7523548350c7fe67091efd1ea5b13027ee04da8927905897543f82f8534b283a",
-  "report_state": "COMPLETED_REPORT_PUBLISHED",
+  "report_state": "TEAM_DESIGNATED_FINAL_PDF_PUBLISHED",
   "report_entry": "../../../../../reports/midterm/README.md",
   "human_contributions_confirmed": null,
   "human_contributions_note": "Names and contributions are stated in the team report; not independently re-confirmed during documentation maintenance.",
   "course_submission_verified": false,
   "normalizer_state": "PLANNED",
-  "last_updated": "2026-10-22",
+  "last_updated": "2026-10-24",
   "review_scope": "Repository documentation and published evidence consistency; no new inference or score replay.",
   "historical_part4_audit_record": "No separate completed Part4 audit record was present; PART3_CHECK.md records the October22 documentation check.",
-  "remaining_items": "LEFTOVERS.md"
+  "remaining_items": "../../../../../reports/final/FINAL_REPORT_FOLLOWUPS.md",
+  "report_pdf": "../../../../../reports/midterm/midterm_report.pdf",
+  "report_sha256": "aaa6b467b3c23893e19190c1e0462d7ce7d6fdb2441dc6dfdced6e05764513e4",
+  "framework_diagram": "DEFERRED_TO_FINAL_REPORT_DUE_TO_MIDTERM_PAGE_LIMIT",
+  "final_source_verified": false
 }
