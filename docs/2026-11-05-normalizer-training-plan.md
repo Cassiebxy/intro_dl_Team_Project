@@ -1,6 +1,6 @@
 # Team 12: Project Status and Normalizer Training and Evaluation Plan
 
-Updated November 5, 2026. Review draft. The proposed training and evaluation settings are open for team review. This status check did not launch training or modify the baseline results.
+Planning snapshot from November 5, 2026. See the [November 6 pilot report](normalizer-pilot/README.md) for completed runs, results, and the revised baseline design.
 
 ## 1. Conclusion and current stage
 
@@ -15,7 +15,7 @@ Start with FLAN-T5-small and validate training, checkpoint reload, generated des
 ### 2.1 Completed
 
 - The Qwen baseline covered 258 BFCL cases, six cues, and two presentation orders, totaling 3,096 requests. Score replay, technical review, and manual sign-off were recorded.
-- The pooled edited-to-original Correct Usage Rate (CUR) ratios ranged from 1.98 to 6.20, showing that description wording can influence tool preference.
+- The pooled edited-to-original Correct Usage Rate (CUR) ratios ranged from 1.98 to 6.20, describing observed preference differences in the historical experiment.
 - The final midterm report was archived locally.
 
 ### 2.2 Pending
@@ -28,7 +28,7 @@ This review used the Drive proposal, meeting notes updated through October 30, a
 
 ### 2.4 Meeting notes and TA feedback
 
-Week 3 emphasized the full project motivation, gaps in related work, citations, formulas, a pipeline diagram, a generative method, and generalization. Week 4 emphasized distinguishing audit from description, training with new cues, adding metrics, and preserving useful information.
+Week 3 emphasized the full project motivation, gaps in related work, citations, formulas, a pipeline diagram, a generative method, and generalization. The accompanying notes flag the confound between description wording and tool order, and ask for unseen wording, separate metrics, and functional preservation.
 
 The TA notes identify selection ratio, conditional argument correctness, and overall correctness as the three metrics to define explicitly. Functional preservation remains a separate assessment.
 
@@ -145,7 +145,7 @@ Report the three tests separately. Freeze model selection before the final test.
 
 Cross-tabulate rewrite failures with downstream failures. Check for intended tool selection with wrong arguments, residual persuasion and preference shift, deleted constraints or units, invented capabilities, harm to clean inputs, and empty, malformed, truncated, or unparseable outputs. Compare by cue, order, name, tool group, and backbone. Retain original descriptions, rewrites, and downstream results for representative successes and failures.
 
-The notes mention the order of “audit and description” without defining the audit’s role or inputs and outputs. Keep this as an open ablation. The description-only pilot can proceed while the meaning is clarified.
+The Week 3 slide mentions “audit and description” order. The accompanying notes clarify the actionable concern as description wording changing together with tool position. The experiment varies these factors independently. Functional preservation remains part of offline evaluation.
 
 ## 9. Report, video, and presentation
 
@@ -162,11 +162,9 @@ The supplied notes record a five-minute video due December 5 at 6 p.m., roughly 
 1. Is FLAN-T5-small first, followed by the two comparison models, the desired order?
 2. How should multi-call outputs, parse failures, and overall correctness be scored?
 3. Which cue families and tool categories should be held out entirely?
-4. What does audit mean in the TA’s feedback, and does it require a separate input or output?
-5. What GPU allocation, persistent storage, budget, and owners are available?
+4. What GPU allocation, persistent storage, budget, and owners are available?
 6. What drop in CR or clean-input performance is acceptable, and how will that tolerance be fixed before testing?
 
-Source-tool deduplication, sample review, pipeline preparation, and a small technical pilot can proceed independently of the open audit question.
 
 ## 11. Sources
 

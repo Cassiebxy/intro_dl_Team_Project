@@ -1,0 +1,17 @@
+order,before,after,metric,n,zero_to_one,one_to_zero,unchanged,net_percentage_points
+original_first,clean,manipulated,rec,22,2,0,20,9.09
+original_first,clean,manipulated,edited_selected,22,2,0,20,9.09
+original_first,manipulated,normalized,rec,22,0,2,20,-9.09
+original_first,manipulated,normalized,edited_selected,22,0,2,20,-9.09
+original_first,clean,clean_normalized,rec,22,0,0,22,0.0
+original_first,clean,clean_normalized,edited_selected,22,0,0,22,0.0
+original_first,clean,normalized,rec,22,0,0,22,0.0
+original_first,clean,normalized,edited_selected,22,0,0,22,0.0
+edited_first,clean,manipulated,rec,22,2,0,20,9.09
+edited_first,clean,manipulated,edited_selected,22,1,3,18,-9.09
+edited_first,manipulated,normalized,rec,22,0,2,20,-9.09
+edited_first,manipulated,normalized,edited_selected,22,3,1,18,9.09
+edited_first,clean,clean_normalized,rec,22,0,0,22,0.0
+edited_first,clean,clean_normalized,edited_selected,22,0,0,22,0.0
+edited_first,clean,normalized,rec,22,0,0,22,0.0
+edited_first,clean,normalized,edited_selected,22,0,0,22,0.0

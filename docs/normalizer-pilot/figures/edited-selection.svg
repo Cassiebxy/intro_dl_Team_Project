@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="583" viewBox="0 0 920 583" role="img">
+<title>Edited tool selection by position</title>
+<rect width="100%" height="100%" fill="#fff"/>
+<g font-family="system-ui,sans-serif" fill="#182639">
+<text x="28" y="38" font-size="25">Edited tool selection by position</text>
+<text x="28" y="65" font-size="14">Initial development pilot • Edited retains the same tool name when order changes</text>
+<text x="28" y="105" font-size="18">Original First</text>
+<text x="28" y="140" font-size="15">Clean</text>
+<rect x="320" y="122" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="122" width="0.00" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="140" font-size="15">0/22 (0%)</text>
+<text x="28" y="184" font-size="15">Manipulated</text>
+<rect x="320" y="166" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="166" width="40.91" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="184" font-size="15">2/22 (9%)</text>
+<text x="28" y="228" font-size="15">Manipulated → normalizer</text>
+<rect x="320" y="210" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="210" width="0.00" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="228" font-size="15">0/22 (0%)</text>
+<text x="28" y="272" font-size="15">Clean → normalizer</text>
+<rect x="320" y="254" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="254" width="0.00" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="272" font-size="15">0/22 (0%)</text>
+<text x="28" y="329" font-size="18">Edited First</text>
+<text x="28" y="364" font-size="15">Clean</text>
+<rect x="320" y="346" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="346" width="163.64" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="364" font-size="15">8/22 (36%)</text>
+<text x="28" y="408" font-size="15">Manipulated</text>
+<rect x="320" y="390" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="390" width="122.73" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="408" font-size="15">6/22 (27%)</text>
+<text x="28" y="452" font-size="15">Manipulated → normalizer</text>
+<rect x="320" y="434" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="434" width="163.64" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="452" font-size="15">8/22 (36%)</text>
+<text x="28" y="496" font-size="15">Clean → normalizer</text>
+<rect x="320" y="478" width="450" height="22" rx="3" fill="#e8edf3"/>
+<rect x="320" y="478" width="163.64" height="22" rx="3" fill="#21678d"/>
+<text x="785" y="496" font-size="15">8/22 (36%)</text>
+</g></svg>
