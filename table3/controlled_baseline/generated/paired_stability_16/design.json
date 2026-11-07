@@ -1,0 +1,16 @@
+{
+  "cases": [
+    "live_simple_188-113-0",
+    "live_simple_67-31-0",
+    "live_simple_70-34-0",
+    "live_simple_0-0-0"
+  ],
+  "requests": 16,
+  "description_conditions": [
+    "clean_control",
+    "table3_cue_1"
+  ],
+  "orders": 2,
+  "name_mapping": "original_suffix1",
+  "purpose": "paired stability check"
+}
