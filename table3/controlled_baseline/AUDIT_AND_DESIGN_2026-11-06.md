@@ -1,6 +1,6 @@
 # Controlled Qwen Table 3 Baseline: Audit and Run Plan
 
-Status: input matrix and CPU evaluation path prepared; **no new Qwen inference has run**. The old baseline files and results remain unchanged. This is not yet a corrected, completed baseline.
+Status: controlled input matrix and CPU evaluation path are prepared. Delta smoke job `23740046` loaded Qwen but all 16 calls failed because Transformers rejected `generator` in `model.generate()`. The runner, retry path, evaluation status, and Slurm success gate have since been corrected locally; the fixed smoke has not yet been rerun. The old baseline files and results remain unchanged. This is not yet a corrected, completed baseline.
 
 ## 1. Existing-baseline audit
 
@@ -42,7 +42,7 @@ The generated matrix crosses three factors independently:
 
 Full size: $7\times2\times2\times258=7{,}224$ requests. This includes 1,032 clean-control requests (4 cells × 258) and 6,192 manipulated requests (24 cells × 258). The six-cue rows are each compared with clean rows at the same order and name mapping; order is compared at fixed description/name; suffix mapping is compared at fixed description/order. For clean-control rows, report candidate A/B identity preferences; do not call either clean tool “manipulated.”
 
-The matrix is fixed-seed paired by source case: all 28 cells for one case use the same SHA256-derived case seed. Sampling remains `do_sample=true`, temperature 0.01, top-p 1.0, top-k 0, repetition penalty 1.0, BF16 Qwen2.5-7B-Instruct at the pinned checkpoint, and the Qwen chat template/tool protocol. The seed pairing is an explicit protocol improvement; the upstream paper's seeds are unavailable. Backend differences from the historical MPS run remain a limitation.
+The matrix is fixed-seed paired by source case: all 28 cells for one case use the same SHA256-derived case seed. Sampling remains `do_sample=true`, temperature 0.01, top-p 1.0, top-k 0, repetition penalty 1.0, BF16 Qwen2.5-7B-Instruct at the pinned checkpoint, and the Qwen chat template/tool protocol. The runner now applies the seed with `torch.manual_seed` and `torch.cuda.manual_seed_all` immediately before generation because the installed Transformers `generate()` rejects a `generator` keyword. This pairs the pseudorandom seed across conditions but cannot guarantee identical random-token streams for different prompts; CUDA kernel/backend nondeterminism is another limitation. The upstream paper's seeds are unavailable. Backend differences from the historical MPS run remain a limitation.
 
 ## 3. Metrics and exact counting rules
 
@@ -58,14 +58,15 @@ The evaluator emits per-request outputs, condition-level CSV/JSON, and paired fa
 
 ## 4. Validation, smoke, GPU budget, and approval boundary
 
-The complete 7,224-row generator and identity/order invariants have passed local CPU validation. A separate 16-request, 16-distinct-case smoke input and a synthetic known-answer scorer check also pass. Those are **not** a real Qwen GPU smoke: no NCSA job has been submitted and no new model output exists.
+The complete 7,224-row generator and identity/order invariants have passed local CPU validation. A separate 16-request, 16-distinct-case smoke input and a synthetic known-answer scorer check also pass. The first real Qwen smoke loaded the model but failed all 16 generation calls on the unsupported `generator` kwarg. The fixed code has not yet been run on Delta. Evaluation now reports response-record completeness separately from successful inference, and smoke Slurm returns failure unless all requests have `status=ok`.
 
 Historical raw-response timings sum to about 2.49 hours for 3,096 requests (mean 2.89 seconds per response), which would extrapolate to about 5.8 active-generation hours for 7,224 at that old MPS rate. The meeting note reports a later 176-request MPS pilot took 2.18 hours (about 44.6 seconds/request), which would extrapolate to about 89 hours at that pilot rate. These measurements differ sharply because their runs and failure behavior differ; neither is a reliable A100 estimate. The second rate would exceed the team's 30 GPU-hour budget. Run the 16-request Delta smoke first, inspect output caps, errors, throughput, and GPU memory, then estimate a full run from measured A100 data. If that estimate approaches 30 hours, ask the team whether to reduce/sequence conditions before submitting more work.
 
-No smoke/full Slurm job has been submitted from this workspace because the machine has no active Delta allocation or authenticated remote session. Use the provided Slurm script after uploading this folder and the model-ready input files to Delta. Full mode requires the explicit `ALLOW_FULL_RUN=1` guard.
+The first 16-request smoke was submitted by the user as Delta job `23740046` and failed in generation on the unsupported `generator` kwarg. No corrected smoke or full Slurm job has been submitted from this workspace. Upload the repaired files and rerun the same smoke output directory; the script now retries `status=error` rows by default and requires all 16 inference statuses to be successful before returning zero. Full mode still requires the explicit `ALLOW_FULL_RUN=1` guard.
 
 ## 5. Report outline
 
 - **Methods:** 258 BFCL live_simple single-turn cases; seven description states; crossed role order and suffix mapping; fixed case-level seed; local Qwen revision and decode/checker protocol; factorial request count; input record contains case/question/tools/schemas/role map/expected arguments outside the prompt.
 - **Results:** first present clean-control role/position/name preferences; then matched cue-minus-clean selection and CUR changes; then position and name-mapping contrasts; report conditional argument accuracy and strict overall correctness beside historical CUR/CR.
 - **Limitations:** one inference per cell/case, backend differs from historical MPS, prompt/model randomness is only paired by a shared seed, suffix 1/2 is a narrow name manipulation, and strict overall correctness needs TA/team confirmation. Do not claim the earlier 3,096 rows isolated description bias.
+

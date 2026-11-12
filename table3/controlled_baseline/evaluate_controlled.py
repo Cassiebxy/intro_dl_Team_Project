@@ -229,11 +229,23 @@ def main() -> int:
             writer = csv.DictWriter(f, fieldnames=list(dict.fromkeys(k for r in contrasts for k in r)))
             writer.writeheader()
             writer.writerows(contrasts)
+    observed_ids = {r.get("experiment_id") or r.get("id") for r in raw}
+    expected_ids = {m["experiment_id"] for m in maps}
+    missing_ids = sorted(expected_ids - observed_ids)
+    successful = sum(r.get("status") == "ok" for r in raw)
+    failed = sum(r.get("status") == "error" for r in raw)
     status = {"expected_requests": len(inputs), "observed_responses": len(raw),
-              "complete": len(raw) == len(inputs), "scored_rows": len(per_case),
+              "complete": not missing_ids, "successful_inference_responses": successful,
+              "failed_inference_responses": failed, "missing_responses": len(missing_ids),
+              "inference_successful": not missing_ids and failed == 0 and successful == len(inputs),
+              "success_rate": successful / len(inputs) if inputs else None,
+              "scored_rows": len(per_case),
               "overall_correctness_convention": "strict single-call live_simple convention; pending team/TA confirmation"}
+    status["missing_experiment_ids"] = missing_ids
     (args.output_dir / "evaluation_status.json").write_text(json.dumps(status, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(status, indent=2))
+    # Keep evaluation artifacts even when inference was incomplete/failed; the
+    # caller (Slurm script) can then fail the job based on inference_successful.
     return 0
 
 

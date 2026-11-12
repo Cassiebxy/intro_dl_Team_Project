@@ -84,6 +84,12 @@ def write_checkpoint(path: Path, rows: dict[str, dict], order: dict[str, int]) -
     os.replace(tmp, path)
 
 
+def select_todo(selected: list[dict], previous: dict[str, dict], retry_errors: bool) -> list[dict]:
+    """Skip successful checkpoints, but retry failed checkpoints on request."""
+    return [r for r in selected if r["experiment_id"] not in previous or
+            (retry_errors and previous[r["experiment_id"]].get("status") == "error")]
+
+
 def validate(input_rows: list[dict], mappings: list[dict]) -> dict[str, dict]:
     input_by_id = {r.get("experiment_id"): r for r in input_rows}
     mapping_by_id = {r.get("experiment_id"): r for r in mappings}
@@ -157,7 +163,6 @@ def main() -> int:
         manifest = {
             "input_sha256": sha256_file(args.input), "mapping_sha256": sha256_file(args.mapping),
             "model_dir": str(args.model_dir.resolve()), "dtype": "bfloat16",
-            "seed_implementation": "torch.manual_seed + torch.cuda.manual_seed_all before each request",
             "model_config_sha256": sha256_file(args.model_dir / "config.json"),
             "tokenizer_config_sha256": sha256_file(args.model_dir / "tokenizer_config.json"),
             "decoding": {"do_sample": True, "temperature": 0.01, "top_p": 1.0,
@@ -177,8 +182,7 @@ def main() -> int:
 
         previous = load_checkpoint(results_path, set(mapping_by_id))
         selected = inputs[:args.limit]
-        todo = [r for r in selected if r["experiment_id"] not in previous or
-                (args.retry_errors and previous[r["experiment_id"]].get("status") == "error")]
+        todo = select_todo(selected, previous, args.retry_errors)
         if not todo:
             print("All selected requests are checkpointed; no model initialization needed.", flush=True)
             return 0
@@ -206,6 +210,8 @@ def main() -> int:
                    "cuda": torch.version.cuda, "gpu": props.name,
                    "model_revision": getattr(model.config, "_commit_hash", None),
                    "chat_template_sha256": hashlib.sha256((tokenizer.chat_template or "").encode()).hexdigest(),
+                   "rng_implementation": "torch.manual_seed and torch.cuda.manual_seed_all immediately before generate",
+                   "reproducibility_limitations": "The seed pairs pseudorandom sampling across conditions, but exact token-level pairing is not guaranteed when prompts differ; CUDA kernels/backends may also be nondeterministic.",
                    "model_load_seconds": model_load_seconds,
                    "model_load_peak_gpu_memory_bytes": torch.cuda.max_memory_allocated(0)}
         manifest_path.write_text(json.dumps(runtime, indent=2) + "\n", encoding="utf-8")
@@ -232,6 +238,10 @@ def main() -> int:
                 encoded = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
                 input_tokens = int(encoded["input_ids"].shape[-1])
                 encoded = {k: v.to("cuda:0") for k, v in encoded.items()}
+                # Transformers generate() does not accept a `generator` kwarg in
+                # supported releases. Seed the global CPU/CUDA RNG immediately
+                # before each generation so each factorial cell for a case starts
+                # from the same pseudorandom seed.
                 torch.manual_seed(mapping["seed"])
                 torch.cuda.manual_seed_all(mapping["seed"])
                 with torch.inference_mode():
@@ -260,7 +270,10 @@ def main() -> int:
             write_checkpoint(results_path, all_rows, order)
             print(f"progress={index}/{len(todo)} status={result['status']} id={rid} elapsed={result['elapsed_seconds']:.2f}s", flush=True)
         print(f"checkpointed={len(all_rows)} selected={len(selected)} output={results_path}", flush=True)
-        return 0
+        failures = sum(all_rows[r["experiment_id"]].get("status") != "ok" for r in selected)
+        successes = len(selected) - failures
+        print(f"inference_successes={successes}/{len(selected)} inference_failures={failures}", flush=True)
+        return 0 if failures == 0 else 1
     finally:
         fcntl.flock(lock_fd, fcntl.LOCK_UN)
         os.close(lock_fd)

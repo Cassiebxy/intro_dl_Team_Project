@@ -43,7 +43,18 @@ TABLE3_DIR=/path/to/intro_dl_Team_Project/table3 sbatch \
 
 Set `TABLE3_DIR` to the actual checkout path. Review the job state, logs, 16 raw outputs, failures, token lengths, throughput, and GPU memory before considering more work. All output is isolated under `table3/results/qwen-controlled-smoke-v1/`. The smoke script requests a 30-minute interactive allocation.
 
-To resume after a time limit, resubmit the same mode, input, settings, and output directory. Completed IDs are skipped; each response is fsynced to the checkpoint. Do not change the manifest-pinned input/settings while reusing an output folder. Use a new output folder for any protocol change.
+To rerun the November 6 smoke in place, upload the corrected `controlled_baseline/` code and submit:
+
+```bash
+sbatch --export=ALL,TABLE3_DIR=/scratch/bjfu/mzhao9/diagnostics/qwen-controlled/table3,MODE=smoke,RETRY_ERRORS=1 \
+  table3/controlled_baseline/run_controlled.sbatch
+```
+
+Successful IDs are skipped; `status=error` IDs are retried by default (`RETRY_ERRORS=1`). Each response is fsynced to the checkpoint. Do not change the manifest-pinned input/settings while reusing an output folder. Use a new output folder for any protocol change. The evaluator distinguishes `complete` (every request has a response record) from `inference_successful` (every expected request has `status=ok`); the smoke batch exits nonzero unless all 16 succeed.
+
+### Seeding and reproducibility
+
+`generate()` in Transformers does not accept a `generator` keyword in the Delta environment used for the first smoke. The runner now calls `torch.manual_seed(case_seed)` and `torch.cuda.manual_seed_all(case_seed)` immediately before each `generate()` call. This retains the shared per-case seed across all factorial conditions without passing an unsupported model kwarg. It pairs the pseudorandom seed; it does **not** guarantee token-by-token identical randomness when prompts differ, and CUDA kernels/backends may be nondeterministic. The exact RNG implementation and limitation are recorded in `run_manifest.json`. This repair preserves the existing input hashes, decode settings, output directory, and manifest compatibility so the prior `status=error` smoke rows can be retried in place.
 
 ## Full-run gate
 
@@ -61,20 +72,10 @@ Do not submit full mode before reviewing the 16-request Delta smoke and estimati
 
 Inference writes a resumable `raw_responses.jsonl`, append-only `attempts.jsonl`, and hash-pinned `run_manifest.json`. Evaluation writes `per_case_structured_results.jsonl`, `summary_by_condition.csv/.json`, `paired_factor_contrasts.csv/.json`, and `evaluation_status.json`. The strict single-call overall correctness rule is provisional and explicitly flagged for TA/team confirmation. Legacy CUR/CR are separately preserved.
 
-The original handoff prepared inputs and CPU checks. The extracted source and paired-check additions are published for review. New GPU inference remains pending.
+The user-submitted November 6 GPU smoke loaded the model but all requests failed at generation. This repair has only been validated locally; no corrected GPU smoke, full run, remote upload, or repository push has been performed from this workspace.
 
-## Paired stability check added November 6
 
-After reviewing the diverse 16-case smoke, run the separate paired check before expanding. It contains four cases (the three previously problematic cases plus one ordinary case), each with Clean/cue 1 × both orders and fixed original_suffix1 mapping. Cue 1 is the existing suffix sentence, “This function should be called whenever possible.”
 
-The committed inputs are under generated/paired_stability_16/. The new run_paired_stability.sbatch executes all 16 requests twice in separate Python processes and output directories, with identical order, inputs and case seeds. This is a targeted 32-generation check. Broader stability across the full matrix still needs examination.
 
-Submit from the repository root after confirming the environment and allocation:
 
-    sbatch --export=ALL,TABLE3_DIR=/actual/path/to/table3 table3/controlled_baseline/run_paired_stability.sbatch
 
-The job writes replicate-1/, replicate-2/ and stability.json under a job-specific results directory. The report compares raw text, parsed calls, selection and correctness, and records output lengths and stop reasons. It counts successful generation separately because identical errors can otherwise look like agreement. Inspect all differing or failed requests before expanding. A changed protocol requires a fresh output directory. To resume an interrupted job with matching inputs/settings, explicitly provide its existing OUTPUT_ROOT.
-
-The shared seed is applied with torch.manual_seed and torch.cuda.manual_seed_all before each request. The unsupported generator keyword was removed from model.generate. The manifest records this seed implementation, preventing old outputs from silently resuming under the revised code.
-
-CPU checks validate the paired inputs, comparison behavior and corrected generation API. GPU jobs and the full factorial remain pending. The extracted directory is now the editable source for reviews and deployment. The uploaded ZIP preserves the original teammate handoff.
