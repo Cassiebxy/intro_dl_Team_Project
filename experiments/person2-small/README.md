@@ -45,3 +45,11 @@ The scripts use Python, PyTorch and Transformers. The packaged data are ready to
 - [Dataset and smoke runner](flow.py)
 - [A1 training](train_main.py), [A2 evaluation](evaluate_a2.py), [A3 training](train_a3.py)
 - [Qwen archive matching](qwen-dev-four/evaluate.py) uses the trained A1 checkpoint and the corrected-baseline archive on this branch.
+
+## Review update
+
+![Exact text recovery by input type](ablation.svg)
+
+A3 was applied to the same 16 cases, two tool orders and four conditions. Across all 128 cells, its Qwen inputs were identical to A1's, including the four cells with no archived response. The 124 matched scores are therefore identical for A1 and A3 in this setup. [A3 requests and scores](qwen-dev-a3/requests_and_scores.jsonl)
+
+The paired table compares both normalized descriptions with the corresponding clean descriptions in the same tool order and records strict calling correctness. Missing archive matches have a blank score. The four missing cells are from one case and require fresh inference under the corrected baseline configuration. The team still needs to confirm the shared split and scoring setup for the held-out three-model comparison. [Per-case rewrite and call comparison](qwen-dev-four/rewrite_vs_call.csv)
