@@ -1,0 +1,62 @@
+{
+  "all": {
+    "n": 115,
+    "a1_exact": 104,
+    "a3_exact": 102,
+    "different_output": 4,
+    "a1_only": 3,
+    "a3_only": 1,
+    "a3_truncated": 0,
+    "a3_blank": 0
+  },
+  "clean": {
+    "n": 23,
+    "a1_exact": 21,
+    "a3_exact": 21,
+    "different_output": 0,
+    "a1_only": 0,
+    "a3_only": 0,
+    "a3_truncated": 0,
+    "a3_blank": 0
+  },
+  "suffix_1": {
+    "n": 23,
+    "a1_exact": 21,
+    "a3_exact": 21,
+    "different_output": 0,
+    "a1_only": 0,
+    "a3_only": 0,
+    "a3_truncated": 0,
+    "a3_blank": 0
+  },
+  "prefix_2": {
+    "n": 23,
+    "a1_exact": 21,
+    "a3_exact": 21,
+    "different_output": 0,
+    "a1_only": 0,
+    "a3_only": 0,
+    "a3_truncated": 0,
+    "a3_blank": 0
+  },
+  "suffix_3": {
+    "n": 23,
+    "a1_exact": 21,
+    "a3_exact": 21,
+    "different_output": 0,
+    "a1_only": 0,
+    "a3_only": 0,
+    "a3_truncated": 0,
+    "a3_blank": 0
+  },
+  "unseen_wording": {
+    "n": 23,
+    "a1_exact": 20,
+    "a3_exact": 18,
+    "different_output": 4,
+    "a1_only": 3,
+    "a3_only": 1,
+    "a3_truncated": 0,
+    "a3_blank": 0
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "epochs": 3,
+  "seed": 42,
+  "lr": 5e-05,
+  "effective_batch": 16,
+  "micro_batch": 4,
+  "checkpoint_selection": "lowest teacher-forced dev loss on seen wording",
+  "generation_limit": "clamp(2 * longest tokenized input per batch, 64, 256)",
+  "model_revision": "0fc9ddf78a1e988dac52e2dac162b0ede4fd74ab",
+  "data_manifest_sha256": "7b4626776e4e1fd92260c6d9a6a86c131ec0d2039ba634dafb422dc6572af191"
+}

@@ -77,3 +77,7 @@ Do not submit full mode before reviewing the 16-request Delta smoke and estimati
 Inference writes a resumable `raw_responses.jsonl`, append-only `attempts.jsonl`, and hash-pinned `run_manifest.json`. Evaluation writes `per_case_structured_results.jsonl`, `summary_by_condition.csv/.json`, `paired_factor_contrasts.csv/.json`, and `evaluation_status.json`. The strict single-call overall correctness rule is provisional and explicitly flagged for TA/team confirmation. Legacy CUR/CR are separately preserved.
 
 The November 6 smoke failed because the installed Transformers version rejected an unsupported `generator` argument. A corrected 16-request Delta smoke later completed successfully as job `23742884` (16/16 inference successes, Slurm exit code 0). The full controlled baseline has not been run. Detailed evidence and limitations are recorded in [BASELINE_STATUS_2026-11-11.md](BASELINE_STATUS_2026-11-11.md).
+
+### FLAN-T5-small normalization experiments
+
+See the [Person 2 experiment report, data, code and scored outputs](experiments/person2-small/README.md).
