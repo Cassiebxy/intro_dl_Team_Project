@@ -1,0 +1,117 @@
+{
+  "run_id": "bfcl-person2-20261119-v1",
+  "model_id": "facebook/bart-base",
+  "revision": "aadd2ab0ae0c8268c7c9693540e9904811f36177",
+  "training": {
+    "seed": 42,
+    "device": "mps",
+    "dtype": "float32",
+    "attention": "eager",
+    "epochs": 3,
+    "batch_size": 4,
+    "accumulation_steps": 4,
+    "learning_rate": 5e-05,
+    "selection_rule": "Lowest mean of teacher-forced dev batch losses on clean and seen wording; ties retain the earlier epoch",
+    "generation": "Greedy; per batch min(256, max(64, 2 * longest tokenized input including prefix)); no target text used",
+    "train_sha256": "7b444406c8434c541fd741678436de90648a99ec2c301f15b51a4b837925baf8",
+    "dev_sha256": "74b92f15ed0d5fc044a60d7125e75a6fa70d8314987f30e88604d49e09f7494b",
+    "protocol_sha256": "fb447eec6b09e5f65d58acc5c8ea1fd469befa9a9073f773ad2acf78cd5cd3c9",
+    "data_manifest_sha256": "7b4626776e4e1fd92260c6d9a6a86c131ec0d2039ba634dafb422dc6572af191",
+    "source_code_sha256": {
+      "__init__.py": "431c1242330b222715e96efd53552ff645b8ccf8e226d7abec117eeb5120e8dc",
+      "core.py": "c493936e97639f696072de31eeeae799a4a6bbdd32aea8fbf46f8c6ffeca9557",
+      "model.py": "869d3667def266ef760a02c1579af4ae2198d488bf288f1142e174d6afe8f751",
+      "make_synthetic.py": "eda5eb41dca693a31d8e3a7887d07bd2024c58579a9316199d6ae38b8b19bfb7",
+      "train.py": "c3fd44ac6b971285ce7647e5af3532f849efe21324a535836b397b2f09dae184",
+      "__main__.py": "caeefdeba87c78829ed6cf6c890cad2bb29ca3b51e78c8d368dea4f1daf45fcb"
+    },
+    "loss_reduction": "Mean over valid target tokens; accumulation weighted by non-padding target-token counts"
+  },
+  "environment": {
+    "platform": "macOS-15.6.1-arm64-arm-64bit",
+    "hardware": {
+      "machine_name": "MacBook Air",
+      "chip_type": "Apple M4",
+      "physical_memory": "16 GB"
+    },
+    "packages": {
+      "torch": "2.13.0",
+      "transformers": "4.57.1",
+      "tokenizers": "0.22.2",
+      "huggingface-hub": "0.36.0",
+      "safetensors": "0.8.0",
+      "numpy": "1.26.4",
+      "psutil": "5.9.0",
+      "matplotlib": "3.8.4"
+    }
+  },
+  "selected_checkpoint": {
+    "checkpoint_sha256": "4676e310f03e161fb136d558487884a941c4086c62cf1fefe6afbf24eac15e28",
+    "protocol_sha256": "fb447eec6b09e5f65d58acc5c8ea1fd469befa9a9073f773ad2acf78cd5cd3c9",
+    "selection_rule": "Lowest mean of teacher-forced dev batch losses on clean and seen wording; ties retain the earlier epoch",
+    "selection_dev_examples": 92,
+    "selected_epoch": 1,
+    "held_out_package_sha256": "81dd21fc172301a8bfa27fe76451f4b9be2edaa6c295a468679038f60838ff34"
+  },
+  "training_summary": {
+    "status": "complete",
+    "purpose": "Person 4 BART-base training on shared BFCL data",
+    "device": "mps",
+    "best_epoch": 1,
+    "epochs_completed": 3,
+    "optimizer_updates": 75,
+    "wall_seconds": 185.237,
+    "peak_observed_memory_bytes": {
+      "process_rss_bytes": 1032781824,
+      "mps_allocated_bytes": 2565519872,
+      "mps_driver_allocated_bytes": 5277171712
+    },
+    "memory_measurement_note": "Sampled process RSS and device allocator counters, not a continuous system-wide peak",
+    "pretrained_dev_metrics": {
+      "schema_version": "person4-bart-local-v1",
+      "n_expected": 115,
+      "n_observed": 115,
+      "missing_ids": [],
+      "extra_ids": [],
+      "contract_errors": [],
+      "contract_valid": true,
+      "ok_n": 115,
+      "error_or_missing_n": 0,
+      "truncated_n": 0,
+      "exact_match_n": 0,
+      "exact_match_rate": 0.0,
+      "protected_span_pass_n": null,
+      "protected_span_pass_rate": null,
+      "clean_identity_exact_match_rate": 0.0,
+      "interpretation": "Text recovery and literal protected-span checks. Review functional meaning separately."
+    },
+    "reloaded_dev_metrics": {
+      "schema_version": "person4-bart-local-v1",
+      "n_expected": 115,
+      "n_observed": 115,
+      "missing_ids": [],
+      "extra_ids": [],
+      "contract_errors": [],
+      "contract_valid": true,
+      "ok_n": 115,
+      "error_or_missing_n": 0,
+      "truncated_n": 0,
+      "exact_match_n": 112,
+      "exact_match_rate": 0.9739130434782609,
+      "protected_span_pass_n": null,
+      "protected_span_pass_rate": null,
+      "clean_identity_exact_match_rate": 1.0,
+      "interpretation": "Text recovery and literal protected-span checks. Review functional meaning separately."
+    },
+    "train_metrics": null,
+    "reload_check": {
+      "checkpoint_loaded": true,
+      "n_compared": 115,
+      "different_ids": [],
+      "passed": true,
+      "decoding": "Greedy, same inputs/settings/device"
+    },
+    "shared_bfcl_training_performed": true,
+    "held_out_inputs_used_for_checkpoint_selection": false
+  }
+}

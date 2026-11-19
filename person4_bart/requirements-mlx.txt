@@ -1,0 +1,4 @@
+# Optional Qwen evaluation on Apple Silicon running macOS 15 or later.
+-r requirements.txt
+mlx==0.29.3
+mlx-lm==0.28.3

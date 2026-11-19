@@ -1,0 +1,12 @@
+{
+  "train_examples": 32,
+  "dev_examples": 16,
+  "train_groups": 8,
+  "dev_groups": 4,
+  "group_overlap": [],
+  "purpose": "Synthetic engineering smoke only; discard checkpoints before formal training",
+  "identity_fraction": 0.25,
+  "cue_family": "known_assertive",
+  "final_test_created": false,
+  "input_contract": "description_id and input_description only; gold is separate"
+}

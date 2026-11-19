@@ -1,0 +1,20 @@
+{
+  "backend": "autodl-replay",
+  "coverage": {
+    "dev": {
+      "observed": 128
+    },
+    "test": {
+      "observed": 932,
+      "missing": 1084
+    }
+  },
+  "failure_types": {
+    "strict_correct": 728,
+    "no_call": 21,
+    "invalid_arguments": 311,
+    "missing": 1084
+  },
+  "bootstrap": "2000 percentile resamples of source tool groups, paired across all matched conditions",
+  "overall_correctness": "Existing strict single-call REC; legacy CR reported separately. Scorer version BFCL pinned in the repository."
+}

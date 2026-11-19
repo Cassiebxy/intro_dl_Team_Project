@@ -1,0 +1,9 @@
+split,condition,both_descriptions_exact,strict_correct,requests
+dev,clean_normalized,True,0,4
+dev,clean_normalized,True,1,28
+dev,normalized,True,0,4
+dev,normalized,True,1,28
+test,clean_normalized,True,0,56
+test,clean_normalized,True,1,112
+test,normalized,True,0,148
+test,normalized,True,1,280
