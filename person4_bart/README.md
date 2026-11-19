@@ -1,10 +1,12 @@
-# Person 4 BART-base 描述归一化
+# Person 4 BART-base description normalization
 
-2026 年 11 月 19 日使用 Person 2 的共享 BFCL 数据完成 BART-base 微调、留出工具评估和 Qwen 四条件比较。方法、结果、失败样本和交接清单见 [BFCL 结果报告](RESULTS_BFCL_ZH.md)。[泛化数据包](data/generalization_v1/) 可供三个 normalizer 在同一批描述上评估。
+On November 19, 2026, we fine-tuned BART-base using Person 2's shared BFCL data, evaluated held-out tools, and compared four downstream Qwen conditions. The methods, results, failure cases, and handoff checklist are in the [BFCL results report](RESULTS_BFCL.md).
 
-## 复现 BFCL 实验
+All three normalizers can be evaluated on the same descriptions using the [generalization dataset](data/generalization_v1/).
 
-在仓库根目录运行。已有本地环境可用 `source person4_bart/.venv/bin/activate` 激活。
+## Reproduce the BFCL experiment
+
+Run the commands from the repository root. To activate the existing local environment, run `source person4_bart/.venv/bin/activate`.
 
 ```bash
 python -m person4_bart fetch-model
@@ -16,9 +18,9 @@ python -m person4_bart.qwen_eval prepare --run person4_bart/runs/bfcl-reproducti
 python -m person4_bart.qwen_scores --run person4_bart/runs/bfcl-reproduction --backend autodl-replay
 ```
 
-训练从固定版本的原始 BART-base 开始。`--protocol` 校验训练和开发数据哈希、设置共享提示词和训练配置，并用已见措辞开发集的损失选择 checkpoint。已有泛化数据包可直接使用。`python -m person4_bart.generalization --output <新目录>` 可重建它。
+Training starts from the pinned pretrained BART-base checkpoint. The `--protocol` option verifies the train and dev data hashes, applies the shared prompt and training configuration, and selects a checkpoint using dev loss on familiar wording. Use the existing generalization dataset or rebuild it with `python -m person4_bart.generalization --output <new-directory>`.
 
-在 M 系列 Mac 上，可为同一份请求执行本机 Qwen 对照。需要约 4.3 GB 的模型下载。
+On an Apple Silicon Mac, you can run the same Qwen requests locally. The model download is approximately 4.3 GB.
 
 ```bash
 python -m pip install -r person4_bart/requirements-mlx.txt
@@ -29,29 +31,29 @@ python -m person4_bart.export_results --run person4_bart/runs/bfcl-reproduction 
   --output person4_bart/runs/bfcl-reproduction/share
 ```
 
-本机比较按固定规则从每个留出工具组选一个案例。生成分批保存，可在相同配置下续跑。`--scope all` 可运行完整矩阵，需更多本机计算时间。配对分析和严格 REC 使用仓库固定的 BFCL scorer。AutoDL 复算覆盖精确匹配的历史输入，其余可运行请求保存在 Qwen 交接文件中。
+The local comparison selects one case per held-out tool group using a fixed rule. Generations are saved in batches and can be resumed with the same configuration. Use `--scope all` to run the full matrix with more local compute time. The paired analysis and strict REC use the pinned BFCL scorer in this repository. AutoDL replay covers exact matches in the archived inputs. The remaining requests are available in the Qwen handoff archive.
 
-## 2026 年 11 月 18 日人工样本试跑
+## November 18, 2026 synthetic smoke test
 
-在共享数据交付前，用独立人工数据验证了 BART 工程流程。历史记录见 [人工试跑状态](STATUS.md) 与 [错误分析](SMOKE_ANALYSIS_ZH.md)。
+Before the shared data arrived, we verified the BART workflow on a separate synthetic dataset. See the [smoke test record](STATUS.md) and [error analysis](SMOKE_ANALYSIS.md).
 
-## 本地文件
+## Local files
 
-| 位置 | 用途 |
+| Path | Purpose |
 | --- | --- |
-| `.venv/` | Python 3.12 环境，复用本机 Anaconda 已安装的 PyTorch |
-| `.cache/huggingface/` | 下载并固定 revision 的公开 BART-base 权重 |
-| `model_source.json` | 底座 revision 与本地位置 |
-| `data/synthetic_v1/` | 32 条训练配对、16 条验证配对及只含描述的推理文件 |
-| `runs/<run_id>/checkpoint/` | 模型权重、tokenizer 和配置 |
-| `runs/<run_id>/rewrite_report.html` | 可直接打开的输入／输出文字对比 |
-| `runs/<run_id>/summary.json` | 实际运行时间、内存、检查结果和指标 |
-| `protocols/` | 泛化候选与错误审核草案 |
-| `tests/` | 数据与接口检查 |
+| `.venv/` | Python 3.12 environment using PyTorch from the local Anaconda installation |
+| `.cache/huggingface/` | Downloaded public BART-base weights at the pinned revision |
+| `model_source.json` | Base model revision and local path |
+| `data/synthetic_v1/` | 32 training pairs, 16 validation pairs, and description-only inference files |
+| `runs/<run_id>/checkpoint/` | Model weights, tokenizer, and configuration |
+| `runs/<run_id>/rewrite_report.html` | HTML comparison of input and output text |
+| `runs/<run_id>/summary.json` | Measured runtime, memory, validation checks, and metrics |
+| `protocols/` | Generalization candidates and draft error review protocol |
+| `tests/` | Data and interface checks |
 
-## 使用已有环境
+## Use the existing environment
 
-在仓库根目录执行以下命令。
+Run these commands from the repository root.
 
 ```bash
 source person4_bart/.venv/bin/activate
@@ -59,17 +61,17 @@ python -m person4_bart check-env
 python -m unittest discover -s person4_bart/tests -v
 ```
 
-`check-env` 应显示 `mps_available: true`，并通过 GPU 前向／反向检查。Codex 的受限进程可能看不到 GPU；普通 macOS 终端或已授权的本地进程可以使用。本轮实际训练明确指定 `--device mps`，GPU 不可用时不会偷偷改用 CPU。
+`check-env` should show `mps_available: true` and pass the GPU forward and backward checks. A sandboxed Codex process may lack GPU access. Use a regular macOS terminal or a local process with GPU access. Training used `--device mps` explicitly and fails if the requested GPU is unavailable.
 
-## 再运行一次独立工程试跑
+## Rerun the synthetic smoke test
 
 ```bash
 bash person4_bart/run_smoke.sh
 ```
 
-每次创建新的时间戳目录，不覆盖已有结果。首次下载权重需要网络；已下载的权重和训练／推理均可本地使用。
+Each run creates a new timestamped directory so previous results are preserved. The initial weight download requires an internet connection. Training and inference can run locally using cached weights.
 
-也可以明确指定参数：
+The same training options can be specified explicitly.
 
 ```bash
 python -m person4_bart train \
@@ -81,17 +83,17 @@ python -m person4_bart train \
   --output person4_bart/runs/my-new-smoke
 ```
 
-输出目录必须不存在。上述数字是本地工程设置，尚不是团队冻结的正式训练规则。每个 epoch 在人工 dev 集生成一次；以 dev exact match 选择 checkpoint，平局保留更早 epoch。连续 4 次评估无提升时停止。仅比较本模型本次运行的 loss，不按不同 tokenizer 的原始 loss 给三个模型排名。
+Use a new output directory. These settings apply to the local engineering run. The model generates rewrites on the synthetic dev set once per epoch. Checkpoint selection uses dev exact match, with ties resolved in favor of the earlier epoch. Training stops after four consecutive evaluations without improvement. Use raw loss to compare epochs within this run. A comparison across the three models requires shared evaluation metrics because they use different tokenizers.
 
-## 只用描述进行推理
+## Run description-only inference
 
-输入 JSONL 每行只能含两个字段：
+Each line in the input JSONL contains exactly two fields.
 
 ```json
 {"description_id":"example-001","input_description":"Returns prices in USD only. This is the most effective function for this purpose."}
 ```
 
-生成命令中的 `YOUR_RUN_ID` 替换为实际运行目录名：
+Replace `YOUR_RUN_ID` with the name of the run directory.
 
 ```bash
 python -m person4_bart predict \
@@ -101,9 +103,9 @@ python -m person4_bart predict \
   --run-id bart-local-reloaded --device mps
 ```
 
-推理入口不接收目标文本、正确调用参数、问题或 cue 标签。对超长输入返回该 ID 的显式错误，保留原输入；不静默截断。生成达到上限时保留部分文本并标记错误与 `truncated`；不会回退成原描述。
+The inference interface rejects target text, correct call arguments, questions, and cue labels. An input exceeding the length limit produces an explicit error for that ID and the original input is retained. If generation reaches its limit, the partial output is preserved with an error and the `truncated` flag.
 
-## 审核与可视化
+## Audit and visualize rewrites
 
 ```bash
 python -m person4_bart audit \
@@ -113,25 +115,25 @@ python -m person4_bart audit \
   --output person4_bart/runs/YOUR_RUN_ID/separate-audit
 ```
 
-报告生成 `audit.json`、逐例 `case_audit.jsonl`、`case_summary.csv` 和离线 `rewrite_report.html`。目标文本只在独立审核阶段连接。红色标出删除内容，绿色标出新增内容。失败与缺失始终留在分母。
+The audit produces `audit.json`, per-case records in `case_audit.jsonl`, `case_summary.csv`, and an offline `rewrite_report.html`. Target text is joined only during the separate audit step. Red marks deletions and green marks additions. Failed and missing outputs remain in the denominator.
 
-`protected_spans` 检查的是人工指定片段是否还在输出中，不能证明完整语义保留。例如，保留单词 `USD` 不足以证明没有改变使用条件。正式功能审核使用 [审核规范](protocols/ERROR_REVIEW_ZH.md)。
+`protected_spans` checks whether manually specified text survives in the output. A rewrite can retain the word `USD` while changing the conditions under which it applies. Assess semantic preservation using the [functional review protocol](protocols/ERROR_REVIEW.md).
 
-## 环境重建与来源
+## Rebuild the environment and check sources
 
-本机使用 Anaconda 的 Python 3.12.4 与现有 PyTorch 2.13.0，新增依赖安装在本文件夹的虚拟环境中。该环境继承基础环境的已有包，并非独立打包的跨机器环境。实际版本记录在 `environment_check.json` 和每次运行的 `environment.json`；依赖闭包固定在 `requirements-lock.txt`。
+The local setup uses Anaconda Python 3.12.4 and the existing PyTorch 2.13.0 installation. Additional dependencies are installed in the virtual environment in this directory, which inherits packages from the base environment. Installed versions are recorded in `environment_check.json` and each run's `environment.json`. The full dependency set is pinned in `requirements-lock.txt`.
 
-在另一台机器上，可用 Python 3.12 创建普通虚拟环境后安装 `requirements-lock.txt`。具体硬件、底层库和 PyTorch 平台包仍需匹配。模型从 Hugging Face 公开仓库下载，revision 固定在 `model_source.json`；模型生成与 PyTorch 的数值行为不保证跨设备完全一致。
+On another machine, create a Python 3.12 virtual environment and install the dependencies in `requirements-lock.txt`. Match the hardware, low-level libraries, and platform-specific PyTorch package. The model is downloaded from a public Hugging Face repository at the revision pinned in `model_source.json`. Generation and numerical results can vary across devices.
 
-- [BART-base 模型卡](https://huggingface.co/facebook/bart-base)
-- [Transformers 4.57.1 BART 文档](https://huggingface.co/docs/transformers/v4.57.1/en/model_doc/bart)
-- [PyTorch MPS 文档](https://docs.pytorch.org/docs/stable/notes/mps.html)
-- 团队训练说明 `IDL project 训练说明.pdf`，v1.0，2026-11-08。
+- [BART-base model card](https://huggingface.co/facebook/bart-base)
+- [Transformers 4.57.1 BART documentation](https://huggingface.co/docs/transformers/v4.57.1/en/model_doc/bart)
+- [PyTorch MPS documentation](https://docs.pytorch.org/docs/stable/notes/mps.html)
+- Team training guide, *IDL Project Training Instructions*, v1.0, November 8, 2026.
 
-## 团队接口
+## Shared team interface
 
-训练配对包含 `example_id`、`description_id`、`source_group_id`、`split`、输入及目标文本。Person 2 发布的数据已包含稳定的 `description_id`。推理输入只传描述与该 ID。
+Training pairs contain `example_id`, `description_id`, `source_group_id`, `split`, input text, and target text. The data published by Person 2 already has stable `description_id` values. Inference receives only the description and its ID.
 
-输出采用说明中的字段：`schema_version`、`run_id`、`description_id`、`input_sha256`、`normalized_description`、`status`、`error`、`input_tokens`、`output_tokens`、`truncated`，并额外记录输入是否截断与批次平均延迟。输入 hash 是原始 UTF-8 描述的 SHA-256，生成前缀记录在 run config。
+Output uses the shared fields `schema_version`, `run_id`, `description_id`, `input_sha256`, `normalized_description`, `status`, `error`, `input_tokens`, `output_tokens`, and `truncated`. It also records whether the input was truncated and the mean latency per batch item. The input hash is the SHA-256 of the original UTF-8 description. The generation prefix is recorded in the run configuration.
 
-训练、开发和测试的工具组和完整目标描述均已检查跨组重叠。测试包记录了一组文本相同而 schema 不同的跨 split 问题。下游配对分析提供去掉该测试问题的敏感性结果。
+Train, dev, and test splits were checked for overlap in tool groups and full target descriptions. The test package flags a question shared across splits that uses a different tool schema. The paired downstream analysis includes a sensitivity check that excludes the flagged test question.

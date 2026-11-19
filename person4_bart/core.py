@@ -190,8 +190,13 @@ def diff_html(before: str, after: str) -> tuple[str, str]:
     return "".join(left), "".join(right)
 
 
-def save_report(directory: Path, metrics: dict, details: list[dict], title: str = "BART 本地人工样本检查",
-                scope: str = "人工样本工程试跑。字面约束检查需要结合功能保留审核。") -> None:
+def save_report(
+    directory: Path,
+    metrics: dict,
+    details: list[dict],
+    title: str = "BART local synthetic audit",
+    scope: str = "Synthetic smoke test. Review functionality preservation alongside literal constraint checks.",
+) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     write_json(directory / "audit.json", metrics)
     write_jsonl(directory / "case_audit.jsonl", details)
@@ -203,17 +208,20 @@ def save_report(directory: Path, metrics: dict, details: list[dict], title: str 
     cases = []
     for row in details:
         before, after = diff_html(row["input_description"], row["normalized_description"])
-        target = html.escape(row["target_description"] or "未提供目标文本")
-        verdict = "完全匹配" if row["exact_match"] else ("需要人工检查" if row["status"] == "ok" else "生成失败")
+        target = html.escape(row["target_description"] or "No target text provided")
+        verdict = "Exact match" if row["exact_match"] else ("Manual review needed" if row["status"] == "ok" else "Generation failed")
         notes = html.escape(json.dumps({"status": row["status"], "missing_protected_spans": row["missing_protected_spans"],
                                        "truncated": row["truncated"], "error": row["error"]}, ensure_ascii=False))
         cases.append(f"<section><h2>{html.escape(row['description_id'])}</h2><p>{verdict}</p>"
-                     f"<div class='pair'><div><h3>输入 · 删除标红</h3><p class='text'>{before}</p></div>"
-                     f"<div><h3>输出 · 新增标绿</h3><p class='text'>{after}</p></div></div>"
-                     f"<h3>人工目标</h3><p class='text'>{target}</p><p class='note'>{notes}</p></section>")
+                     f"<div class='pair'><div><h3>Input (deletions in red)</h3><p class='text'>{before}</p></div>"
+                     f"<div><h3>Output (additions in green)</h3><p class='text'>{after}</p></div></div>"
+                     f"<h3>Reference target</h3><p class='text'>{target}</p><p class='note'>{notes}</p></section>")
     score = metrics["exact_match_rate"]
-    headline = f"{metrics['exact_match_n']}/{metrics['n_expected']} 完全匹配 ({score:.1%})" if score is not None else "未提供 gold target，仅检查接口"
-    document = """<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    headline = (
+        f"{metrics['exact_match_n']}/{metrics['n_expected']} exact matches ({score:.1%})"
+        if score is not None else "Interface checks only. No gold target was provided."
+    )
+    document = """<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>__TITLE__</title><style>
 body{font:16px/1.7 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#202b35;background:#f6f8fa;margin:0}
 main{max-width:1120px;margin:40px auto;padding:0 24px}h1{font-size:30px}h2{font-size:18px;overflow-wrap:anywhere}h3{font-size:14px;color:#516273}
@@ -222,7 +230,7 @@ del{background:#ffe0e0;color:#8a1523}ins{background:#d8f3dc;color:#165a2c;text-d
 @media(max-width:720px){.pair{grid-template-columns:1fr;gap:4px}}
 </style><main><h1>__TITLE__</h1><p>__HEADLINE__</p>
 <p>__SCOPE__</p>
-<p>输入中的红色部分被删除；输出中的绿色部分是新增内容。失败、截断及未匹配样本均保留。</p>__CASES__</main></html>"""
+<p>Red marks deletions in the input. Green marks additions in the output. Failed, truncated, and unmatched cases are included.</p>__CASES__</main></html>"""
     document = document.replace("__TITLE__", html.escape(title)).replace("__HEADLINE__", html.escape(headline))
     document = document.replace("__SCOPE__", html.escape(scope)).replace("__CASES__", "".join(cases))
     (directory / "rewrite_report.html").write_text(document, encoding="utf-8")

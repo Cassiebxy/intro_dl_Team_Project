@@ -84,8 +84,11 @@ def main(run: Path, device: str):
         metrics, details = audit(inputs, rows, pairs)
         if not metrics["contract_valid"]:
             raise ValueError(f"Invalid output coverage: {name}")
-        save_report(destination, metrics, details, "BART 留出工具改写",
-                    "BFCL 留出工具的文本恢复。Person 2 的 wording probe 在开发集出现过。新泛化包使用另外四条措辞。")
+        save_report(
+            destination, metrics, details, "BART rewrites on held-out tools",
+            "Text recovery on held-out BFCL tools. Person 2's wording probe was included in development. "
+            "The new generalization suite uses four different cue wordings.",
+        )
         summaries[name] = group_summary(pairs, details)
         print(name, metrics["exact_match_n"], "/", metrics["n_expected"], flush=True)
     pairs = load_pairs(data / "pairs_dev.jsonl", "dev")
