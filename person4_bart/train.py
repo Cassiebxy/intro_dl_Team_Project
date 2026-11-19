@@ -75,8 +75,11 @@ def train(args) -> dict:
     if protocol and source.name != protocol["bart_base_revision"]:
         raise ValueError("BART-base snapshot revision differs from protocol")
     purpose = "Person 4 BART-base training on shared BFCL data" if protocol else "Synthetic local engineering smoke"
-    report_scope = ("BFCL 开发集文本恢复。按已见措辞的损失选择模型，词句与功能保留独立审核。"
-                    if protocol else "人工样本工程试跑。字面约束检查需要结合功能保留审核。")
+    report_scope = (
+        "Text recovery on the BFCL development set. Checkpoint selection uses loss on familiar wording. "
+        "Wording and functionality preservation are audited separately."
+        if protocol else "Synthetic smoke test. Review functionality preservation alongside literal constraint checks."
+    )
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
     start = time.perf_counter()
@@ -125,7 +128,7 @@ def train(args) -> dict:
         before = generate(model, tokenizer, inputs_dev, run_id=out.name + "-pretrained", **decode)
         write_jsonl(out / "pretrained_rewrites.jsonl", before)
         initial_metrics, initial_details = audit(inputs_dev, before, pairs_dev)
-        save_report(out / "pretrained_audit", initial_metrics, initial_details, "BART 未微调开发集改写", report_scope)
+        save_report(out / "pretrained_audit", initial_metrics, initial_details, "Pretrained BART dev rewrites", report_scope)
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=0.01)
         history, best_epoch, best_score, stale, updates = [], 0, float("-inf"), 0, 0
         peak = memory(device)
@@ -215,13 +218,13 @@ def train(args) -> dict:
                         "passed": not differences, "decoding": "Greedy, same inputs/settings/device"}
         write_json(out / "reload_check.json", reload_check)
         metrics, details = audit(inputs_dev, outputs, pairs_dev)
-        save_report(out, metrics, details, "BART 开发集改写", report_scope)
+        save_report(out, metrics, details, "BART dev rewrites", report_scope)
         train_metrics = None
         if not protocol:
             train_outputs = generate(reloaded, tokenizer, inference_rows(pairs_train), run_id=out.name, **decode)
             write_jsonl(out / "train_rewrites.jsonl", train_outputs)
             train_metrics, train_details = audit(inference_rows(pairs_train), train_outputs, pairs_train)
-            save_report(out / "train_audit", train_metrics, train_details, "BART 人工训练样本改写")
+            save_report(out / "train_audit", train_metrics, train_details, "BART synthetic training rewrites")
         sample_memory()
         summary = {"status": "complete", "purpose": purpose, "device": device,
                    "best_epoch": best_epoch, "epochs_completed": len(history), "optimizer_updates": updates,
