@@ -1,80 +1,83 @@
-# Mitigating Tool Preference Bias in LLM Agents
-## Trainable Description Normalization — CMU 11-785 Team Project
+# Controlled Qwen baseline
 
-We study whether assertive wording in a tool description changes an LLM agent's choice between functionally equivalent tools. Our completed baseline reproduces the Qwen2.5-7B experiment from Table 3 of *Tool Preferences in Agentic LLMs Are Unreliable*. The next stage will evaluate trainable description normalization while preserving tool functionality and parameter schemas.
+This directory is a new, isolated experimental pipeline. It does not overwrite `table3/generated/`, the existing `results/`, or the archived 3,096-request MPS baseline.
 
-**Status — October 24, 2026:** the Table 3 baseline is complete, including the full run, offline score replay, technical review, and human signoff. The team-designated final midterm report is available; the PDF is preserved as supplied. Normalizer training and evaluation remain planned.
+For the current status, successful Delta smoke evidence, reproducibility notes, metric definitions, and next steps, see [BASELINE_STATUS_2026-11-11.md](BASELINE_STATUS_2026-11-11.md).
 
-## Start here
+For the completed 7,224-request AutoDL run, runtime manifest, integrity checks, descriptive results, and a copy/paste teammate context packet, see [AUTODL_FULL_RUN_HANDOFF_2026-11-12.md](AUTODL_FULL_RUN_HANDOFF_2026-11-12.md).
 
-- **[Final midterm report](reports/midterm/midterm_report.pdf)** ([version notes and earlier source](reports/midterm/README.md)) — motivation, methodology, baseline results, limitations, and next steps.
-- **[Paper comparison](handoffs/table3-baseline/2026-10-20/tables/PAPER_VS_LOCAL_TABLE3.md)** and **[results by presentation order](handoffs/table3-baseline/2026-10-20/tables/ORDER_EFFECTS.md)**.
-- **[Scoring review](handoffs/table3-baseline/2026-10-20/reviews/part3/REVIEW_REPORT.md)** and **[human signoff](handoffs/table3-baseline/2026-10-20/reviews/part3/HUMAN_SIGNOFF.md)**.
-- **[Reproducibility and evidence](handoffs/table3-baseline/2026-10-20/README.md)** — frozen inputs, raw responses, scores, source snapshots, and portable offline replay.
-- **[Current project status](handoffs/table3-baseline/2026-10-20/CURRENT_STATUS.md)** — supersedes outdated pending/local-only labels in historical handoffs.
+## Design
 
-## Completed baseline
+`generate_controlled_inputs.py` crosses description (`clean` + six cues), role order (2), and suffix/name mapping (2) over the same 258 BFCL cases. Full size is 7,224 requests. Both tools retain their role-specific names/descriptions/schemas when their list order changes. Names no longer follow position. One case-derived seed is shared by all 28 cells for that case. See [the audit and design note](AUDIT_AND_DESIGN_2026-11-06.md) for factor definitions, reuse policy, metric numerators/denominators, limitations, and the old-baseline audit.
 
-| Component | Setup |
-|---|---|
-| Agent | `Qwen/Qwen2.5-7B-Instruct`; no model training |
-| Checkpoint revision | `a09a35458c702b33eeacc393d103063234e8bc28` |
-| Data | 258 canonical BFCL `live_simple` cases |
-| Conditions | Six assertive cues × two presentation orders |
-| Requests | **3,096** total; 516 per cue and 258 per cue/order |
-| Tool pair | Matching functionality and parameter schemas; one description appends an assertive cue |
-| Runtime | Apple Silicon / PyTorch MPS, unquantized BF16 |
-| Run completed | October 20, 2026, 15:47 EDT |
-| Validation | All 3,096 saved scores matched offline replay; Part 3 technical review PASS and Kyrie human signoff PASS on October 21 |
-| Run health | Zero technical failures, zero output truncations; one parse failure retained in the denominator |
+## Generate and validate locally (CPU only)
 
-## Results
+From the repository root:
 
-Percentages pool both orders. See the [full comparison CSV](handoffs/table3-baseline/2026-10-20/tables/paper_vs_local_table3.csv) for cue text and paper reference values.
+```bash
+python table3/controlled_baseline/generate_controlled_inputs.py \
+  --output-dir table3/controlled_baseline/generated/full_factorial_v2
+python table3/controlled_baseline/run_qwen_controlled.py \
+  --input table3/controlled_baseline/generated/full_factorial_v2/controlled_inputs.jsonl \
+  --mapping table3/controlled_baseline/generated/full_factorial_v2/controlled_mapping.jsonl \
+  --limit 16 --validate-only
+```
 
-| Cue | Edited-tool CUR (%) | Original-tool CUR (%) | CUR ratio | CR (%) |
-|---|---:|---:|---:|---:|
-| 1 | 47.29 | 23.84 | 1.984 | 71.12 |
-| 2 | 52.33 | 18.22 | 2.872 | 70.54 |
-| 3 | 52.13 | 18.60 | 2.802 | 70.74 |
-| 4 | 54.65 | 16.47 | 3.318 | 71.12 |
-| 5 | 58.91 | 11.82 | 4.984 | 70.74 |
-| 6 | 61.24 | 9.88 | 6.196 | 71.12 |
+Create the 16-request sample used for the first GPU smoke:
 
-**Metrics:** a tool contributes to correct usage rate (CUR) if it has at least one correct call and no incorrect calls to that same tool in a request. CR is the fraction of requests where at least one candidate tool satisfies that criterion. The CURs may overlap in general. Ratio = edited CUR / original CUR; it is undefined when original CUR is zero. Parse failures remain in the fixed denominator.
+```bash
+python table3/controlled_baseline/generate_controlled_inputs.py \
+  --smoke-cases 16 \
+  --output-dir table3/controlled_baseline/generated/smoke_16_ta_reviewed_v2
+```
 
-The pooled edited-tool advantage ranges from **1.984× to 6.196×**. This is a directional reproduction with substantial order/name-label dependence: the first three cues do not favor the edited tool in the original-first condition. Tool position and name suffix are coupled, so the results do not isolate a causal position effect. Local CR is 4.08–5.86 percentage points below the paper; the cause has not been isolated. The local MPS/Transformers backend differs from the original CUDA/vLLM setup.
+The sample uses 16 distinct cases, varies clean/cue, order, and suffix assignment, and includes the three legacy long-output cases (`live_simple_188-113-0`, `live_simple_67-31-0`, `live_simple_70-34-0`). It is a smoke sample, not a balanced estimate of treatment effects.
 
-[Order effects](handoffs/table3-baseline/2026-10-20/tables/ORDER_EFFECTS.md), [failure counts](handoffs/table3-baseline/2026-10-20/reviews/part3/results/response_failure_counts.csv), and [checker edge cases](handoffs/table3-baseline/2026-10-20/reviews/part3/evidence/CASE_REVIEW.md) accompany the results. Repeated cases across conditions are paired observations, not 3,096 independent tasks.
+## Delta run
 
-## Reproduce and inspect
+The batch file defaults to smoke mode and 16 requests. Upload this folder, `table3/generated/`, and `table3/table3_cues.json`. The controlled runner has its own Qwen adapter and does not depend on `run_qwen_table3.py`. Keep the Qwen checkpoint at `/scratch/bjfu/mzhao9/Qwen2.5-7B-Instruct` or set `MODEL_DIR`.
 
-The [evidence package](handoffs/table3-baseline/2026-10-20/README.md) contains frozen configuration, raw responses, per-request scores, source snapshots, and a standard-library offline replay script. Replay requires no model download, GPU, or paid API. Model weights and virtual environments are excluded.
+From the Delta project checkout, after the smoke JSONL files exist:
 
-The [data-preparation module](table3/README.md) documents upstream data construction. The complete inference/scoring implementation is preserved inside the evidence ZIP; a consolidated top-level training/evaluation package has not yet been published.
+```bash
+TABLE3_DIR=/path/to/intro_dl_Team_Project/table3 sbatch \
+  --export=ALL,TABLE3_DIR=/path/to/intro_dl_Team_Project/table3,MODE=smoke \
+  table3/controlled_baseline/run_controlled.sbatch
+```
 
-## Next stage
+Set `TABLE3_DIR` to the actual checkout path. Review the job state, logs, 16 raw outputs, failures, token lengths, throughput, and GPU memory before considering more work. All output is isolated under `table3/results/qwen-controlled-smoke-v1/`. The smoke script requests a 30-minute interactive allocation.
 
-See [final report follow-ups](reports/final/FINAL_REPORT_FOLLOWUPS.md) for the planned framework diagram, reporting clarifications, and open research items. The diagram was deferred from midterm because of the page limit.
+To rerun the November 6 smoke in place, upload the corrected `controlled_baseline/` code and submit:
 
-1. Add clean-vs-clean controls and disentangle presentation order from tool-name labels.
-2. Finalize grouped train/dev/test splits and train the planned FLAN-T5-small, FLAN-T5-base, and BART-base normalizers.
-3. Evaluate preference reduction alongside functionality preservation and downstream CR.
+```bash
+sbatch --export=ALL,TABLE3_DIR=/scratch/bjfu/mzhao9/diagnostics/qwen-controlled/table3,MODE=smoke,RETRY_ERRORS=1 \
+  table3/controlled_baseline/run_controlled.sbatch
+```
 
-These are planned extensions; the current results contain no trained normalizer.
+Successful IDs are skipped; `status=error` IDs are retried by default (`RETRY_ERRORS=1`). Each response is fsynced to the checkpoint. Do not change the manifest-pinned input/settings while reusing an output folder. Use a new output folder for any protocol change. The evaluator distinguishes `complete` (every request has a response record) from `inference_successful` (every expected request has `status=ok`); the smoke batch exits nonzero unless all 16 succeed.
 
-## Repository guide
+### Seeding and reproducibility
 
-| Path | Contents |
-|---|---|
-| [`reports/midterm/`](reports/midterm/README.md) | Current report and source links |
-| [`table3/`](table3/README.md) | Data preparation, pinned sources, generated inputs, validation |
-| [`handoffs/table3-baseline/2026-10-20/`](handoffs/table3-baseline/2026-10-20/README.md) | Baseline evidence, tables, figures, scoring review, historical handoffs |
-| [`proposal/document.tex`](proposal/document.tex) | Original proposal and initial plan |
+`generate()` in Transformers does not accept a `generator` keyword in the Delta environment used for the first smoke. The runner now calls `torch.manual_seed(case_seed)` and `torch.cuda.manual_seed_all(case_seed)` immediately before each `generate()` call. This retains the shared per-case seed across all factorial conditions without passing an unsupported model kwarg. It pairs the pseudorandom seed; it does **not** guarantee token-by-token identical randomness when prompts differ, and CUDA kernels/backends may be nondeterministic. The exact RNG implementation and limitation are recorded in `run_manifest.json`. This repair preserves the existing input hashes, decode settings, output directory, and manifest compatibility so the prior `status=error` smoke rows can be retried in place.
 
-## References
+## Full-run gate
 
-- [Tool Preferences in Agentic LLMs Are Unreliable](https://aclanthology.org/2025.emnlp-main.1060/)
-- [Original paper's code and data](https://github.com/kazemf78/llm-unreliable-tool-preferences)
+The separate full-run script requires explicit `ALLOW_FULL_RUN=1`; it uses the standard `gpuA100x4` queue and checkpoints the 7,224-request run in 8-hour chunks:
 
-See the [report bibliography](reports/midterm/README.md) and [source attribution](handoffs/table3-baseline/2026-10-20/SOURCES_AND_ATTRIBUTION.md) for additional references and provenance.
+```bash
+TABLE3_DIR=/actual/path/to/table3 sbatch \
+  --export=ALL,TABLE3_DIR=/actual/path/to/table3,ALLOW_FULL_RUN=1 \
+  table3/controlled_baseline/run_controlled_long.sbatch
+```
+
+Do not submit full mode before reviewing the 16-request Delta smoke and estimating cost against the remaining 30 GPU-hours. Delta documents a 1-hour limit for `gpuA100x4-interactive` and 48 hours for `gpuA100x4`. Historical MPS timing gives inconsistent extrapolations (roughly 5.8–89 hours for this matrix); it is not a trustworthy Delta estimate.
+
+## Outputs and metrics
+
+Inference writes a resumable `raw_responses.jsonl`, append-only `attempts.jsonl`, and hash-pinned `run_manifest.json`. Evaluation writes `per_case_structured_results.jsonl`, `summary_by_condition.csv/.json`, `paired_factor_contrasts.csv/.json`, and `evaluation_status.json`. The strict single-call overall correctness rule is provisional and explicitly flagged for TA/team confirmation. Legacy CUR/CR are separately preserved.
+
+The November 6 smoke failed because the installed Transformers version rejected an unsupported `generator` argument. A corrected 16-request Delta smoke later completed successfully as job `23742884` (16/16 inference successes, Slurm exit code 0). The full controlled baseline has not been run. Detailed evidence and limitations are recorded in [BASELINE_STATUS_2026-11-11.md](BASELINE_STATUS_2026-11-11.md).
+
+### FLAN-T5-small normalization experiments
+
+See the [Person 2 experiment report, data, code and scored outputs](experiments/person2-small/README.md).

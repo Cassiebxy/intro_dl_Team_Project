@@ -1,0 +1,30 @@
+{
+  "group_counts": {
+    "train": 57,
+    "test": 13,
+    "dev": 13
+  },
+  "pair_counts": {
+    "train": 400,
+    "test": 95,
+    "dev": 115
+  },
+  "old_train_case_overlap": {
+    "dev": [
+      "live_simple_56-26-0",
+      "live_simple_57-26-1"
+    ],
+    "test": []
+  },
+  "split_decision": "Group 131 joined 128 in dev as a conservative near-duplicate precaution.",
+  "generalization_scope": "The same wording probe is used in dev and test. Test holds out tool groups.",
+  "hashes": {
+    "normalizer_inputs_dev.jsonl": "11d501c480e282659bde50e6664e8442ceac235cfefaab238f1e0dfc30f3ea7a",
+    "normalizer_inputs_test.jsonl": "852255d590c7520de1b5699e2dc100d66f8a51a8ec232b5b505911762ed86ae5",
+    "normalizer_inputs_train.jsonl": "755640f2cfe3a296c30999f58a3d187e93b7e2fffebc82e2b20be5e27c1f699e",
+    "pairs_dev.jsonl": "74b92f15ed0d5fc044a60d7125e75a6fa70d8314987f30e88604d49e09f7494b",
+    "pairs_test.jsonl": "cc20681e159ed099b6825ee1a321b37c03b70fa3c44b2e177c9e75f8a13313a4",
+    "pairs_train.jsonl": "7b444406c8434c541fd741678436de90648a99ec2c301f15b51a4b837925baf8",
+    "split_manifest.jsonl": "cf0d32c871dddd1f595d70153262048aa2b9c4b9e64705f907a630c47730d80b"
+  }
+}

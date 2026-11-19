@@ -1,0 +1,11 @@
+{
+  "cases": 258,
+  "requests": 7224,
+  "description_conditions": 7,
+  "orders": 2,
+  "name_mappings": 2,
+  "factorial_cells": 28,
+  "requests_per_cell_min": 258,
+  "requests_per_cell_max": 258,
+  "smoke_sample": false
+}

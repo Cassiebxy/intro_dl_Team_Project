@@ -1,0 +1,69 @@
+{
+  "training_steps": 0,
+  "device": "cpu",
+  "base_revision": "0fc9ddf78a1e988dac52e2dac162b0ede4fd74ab",
+  "prompt_prefix": "Remove promotional language. Preserve all functional details: ",
+  "batch_size": 4,
+  "decoding": "greedy",
+  "generation_limit": "clamp(2 * longest tokenized input per batch, 64, 256)",
+  "results": {
+    "all": {
+      "n": 115,
+      "a1_only_exact": 87,
+      "a1_exact": 104,
+      "a2_exact": 17,
+      "a2_blank": 3,
+      "a2_truncated": 4,
+      "both_exact": 17,
+      "neither_exact": 11
+    },
+    "clean": {
+      "n": 23,
+      "a1_only_exact": 16,
+      "a1_exact": 21,
+      "a2_exact": 5,
+      "a2_blank": 1,
+      "a2_truncated": 1,
+      "both_exact": 5,
+      "neither_exact": 2
+    },
+    "suffix_1": {
+      "n": 23,
+      "a1_only_exact": 21,
+      "a1_exact": 21,
+      "a2_exact": 0,
+      "a2_blank": 0,
+      "a2_truncated": 1,
+      "neither_exact": 2
+    },
+    "prefix_2": {
+      "n": 23,
+      "both_exact": 9,
+      "a1_exact": 21,
+      "a2_exact": 9,
+      "a2_blank": 1,
+      "a2_truncated": 1,
+      "neither_exact": 2,
+      "a1_only_exact": 12
+    },
+    "suffix_3": {
+      "n": 23,
+      "a1_only_exact": 21,
+      "a1_exact": 21,
+      "a2_exact": 0,
+      "a2_blank": 0,
+      "a2_truncated": 0,
+      "neither_exact": 2
+    },
+    "unseen_wording": {
+      "n": 23,
+      "a1_only_exact": 17,
+      "a1_exact": 20,
+      "a2_exact": 3,
+      "a2_blank": 1,
+      "a2_truncated": 1,
+      "both_exact": 3,
+      "neither_exact": 3
+    }
+  }
+}
