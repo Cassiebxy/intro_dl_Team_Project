@@ -1,0 +1,14 @@
+{
+  "backend": "mlx-groups",
+  "coverage": {
+    "test": {
+      "observed": 624
+    }
+  },
+  "failure_types": {
+    "invalid_arguments": 161,
+    "strict_correct": 463
+  },
+  "bootstrap": "2000 percentile resamples of source tool groups, paired across all matched conditions",
+  "overall_correctness": "Existing strict single-call REC; legacy CR reported separately. Scorer version BFCL pinned in the repository."
+}

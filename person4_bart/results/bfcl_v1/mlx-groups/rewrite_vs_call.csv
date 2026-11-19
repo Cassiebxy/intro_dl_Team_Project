@@ -1,0 +1,7 @@
+split,condition,both_descriptions_exact,strict_correct,requests
+test,clean_normalized,True,0,12
+test,clean_normalized,True,1,40
+test,normalized,False,0,34
+test,normalized,False,1,82
+test,normalized,True,0,32
+test,normalized,True,1,112

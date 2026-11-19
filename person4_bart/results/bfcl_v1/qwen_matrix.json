@@ -1,0 +1,34 @@
+{
+  "protocol_id": "person4-bart-bfcl-v1",
+  "protocol_sha256": "fb447eec6b09e5f65d58acc5c8ea1fd469befa9a9073f773ad2acf78cd5cd3c9",
+  "planned": {
+    "dev": 128,
+    "test": 2016
+  },
+  "actual_eligible_unique_payloads": 1072,
+  "normalizer_error_cells": 0,
+  "archive_matched": {
+    "dev": 128,
+    "test": 932
+  },
+  "archive_pending": {
+    "test": 1084
+  },
+  "archive_model_revision": null,
+  "archive_gpu": "NVIDIA GeForce RTX 4090",
+  "archive_expected_chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+  "archive_sha256": "b643096043429fab85f50cb6657c8990e97562d8043be7491fb6da8e8be45ad5",
+  "bart_checkpoint_sha256": "4676e310f03e161fb136d558487884a941c4086c62cf1fefe6afbf24eac15e28",
+  "rewrite_sha256": {
+    "dev": "d369f9fbaf3034dc81fe731e20ec6e505e3772341c4512fb2e164e77c3c210fd",
+    "test": "aff90210f1e30fb08a51080e8233df9a896e1ed16e5141b21dde819a7b850eee"
+  },
+  "files": {
+    "autodl_pending_inputs.jsonl": "0b29279cc81159d87120dda26342763d9f2e3621be6efe5e8e7d62fde967db44",
+    "autodl_pending_mapping.jsonl": "afcbe7c8a277d7f1a59e473ca45da606eb7c4c4c82255e9640cb36016bc00b42",
+    "autodl_replay_raw.jsonl": "154c43ca51230985e233ea7efe1d34449a3a03bfc5091d11c1fbc3de8ab81e42",
+    "comparison_inputs.jsonl": "e43f7979635b1c661f8f1c9b6d8ab73e2b02aa94749b8cd89ddcb607816ac540",
+    "comparison_mapping.jsonl": "c390012f8d110e92ab58fca002b6b15da37994b06800e3597e19893f3c6f44aa",
+    "mlx_unique_inputs.jsonl": "3f4da08b03e07c393fb0de0ce9b817a291361b29cad155b77ba7c124859f00e3"
+  }
+}

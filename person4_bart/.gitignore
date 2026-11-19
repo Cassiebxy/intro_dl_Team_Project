@@ -1,0 +1,10 @@
+.venv/
+.cache/
+runs/
+logs/
+model_source.json
+environment_check.json
+artifact_manifest.json
+__pycache__/
+*.pyc
+.DS_Store

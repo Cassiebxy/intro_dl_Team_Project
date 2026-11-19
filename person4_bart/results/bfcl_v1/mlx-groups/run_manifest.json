@@ -1,0 +1,39 @@
+{
+  "model_id": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+  "revision": "c26a38f6a37d0a51b4e9a1eb3026530fa35d9fed",
+  "backend": "MLX Metal",
+  "quantization": {
+    "group_size": 64,
+    "bits": 4
+  },
+  "mlx": "0.29.3",
+  "mlx_lm": "0.28.3",
+  "transformers": "4.57.1",
+  "platform": "macOS-15.6.1-arm64-arm-64bit",
+  "input_sha256": "3f4da08b03e07c393fb0de0ce9b817a291361b29cad155b77ba7c124859f00e3",
+  "max_new_tokens": 512,
+  "decoding": "greedy",
+  "completion_batch_size": 16,
+  "prefill_batch_size": 8,
+  "checkpoint_batch_size": 24,
+  "tokenizer_config_sha256": "4921d4cbae33349a9cb3b2ad3a7622efdea10a5d208c9f333c77b154aa714888",
+  "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+  "expected_autodl_chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+  "cohort_selection": "One held-out case per Person 2 source tool group, minimum SHA-256 of the case ID",
+  "scope_reason": "Bounded local comparison after timing the first full-scope batch. Selection uses no model outcomes.",
+  "selected_cases_by_group": {
+    "121": "live_simple_86-47-0",
+    "139": "live_simple_247-129-0",
+    "141": "live_simple_77-38-0",
+    "18": "live_simple_245-127-0",
+    "22": "live_simple_68-32-0",
+    "23": "live_simple_103-61-1",
+    "26": "live_simple_105-62-0",
+    "4": "live_simple_42-17-2",
+    "42": "live_simple_121-77-0",
+    "47": "live_simple_164-97-0",
+    "54": "live_simple_50-22-0",
+    "8": "live_simple_204-116-12",
+    "84": "live_simple_123-79-0"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "requests": 312,
+  "status": "complete",
+  "generation_batch_seconds": 1586.728,
+  "peak_memory_bytes": 6963511024,
+  "finish_reasons": {
+    "stop": 312
+  },
+  "parse_errors": 0
+}

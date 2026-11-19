@@ -1,0 +1,4 @@
+{"description_id": "toy_diagnostic_1", "input_description": "Returns temperatures in °C for São Paulo. Does not return historical observations."}
+{"description_id": "toy_diagnostic_2", "input_description": "Finds hotels in Hà Nội. Requires a check-in date in YYYY-MM-DD format."}
+{"description_id": "toy_diagnostic_3", "input_description": "Returns a user's public display name. Does not reveal private email addresses."}
+{"description_id": "toy_diagnostic_4", "input_description": "Uploads a file only after explicit authorization. The maximum file size is 5 MB."}
