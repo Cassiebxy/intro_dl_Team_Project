@@ -1,0 +1,7 @@
+{
+  "source_archive": "person3-results-24205857.tar.gz",
+  "archive_sha256": "15a1302082b19cef441fb17c8c83551aa591c4ba86eb4308adf9f85aff806480",
+  "verification": "All eight uploaded summaries exactly reproduced by rescoring rewrites against repository pairs.",
+  "checkpoint_weights_included": false,
+  "additional_comparisons": "Existing repository small and BART outputs rescored; small test/generalization unavailable in inspected snapshot."
+}

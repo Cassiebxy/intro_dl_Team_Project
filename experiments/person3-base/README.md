@@ -2,7 +2,7 @@
 
 Based on main commit `8cf4b2e5f9d7305d611c626d79f1c0f1ef49836f`.
 
-**Status (2026-11-19): Delta smoke testing, multi-cue and single-cue training, and text-level dev/test/shared-generalization evaluation are complete. Downstream Qwen inference for these models is still pending.** All eight uploaded score summaries have now been independently reproduced from the raw rewrites. Evidence, configurations, figures, and reproducible Qwen handoff scripts have been prepared locally; publication of those artifacts is pending user confirmation. Checkpoint weights remain on Delta. No downstream improvement is claimed.
+**Status (2026-11-19): Delta smoke testing, multi-cue and single-cue training, and text-level dev/test/shared-generalization evaluation are complete. Downstream Qwen inference for these models is still pending.** All eight uploaded score summaries have now been independently reproduced from the raw rewrites. Versioned [evidence, configurations, and figures](evidence/delta-24205857/) are included; checkpoint weights remain on Delta. See [Qwen handoff instructions](QWEN_HANDOFF.md). No downstream improvement is claimed.
 
 ## Observed Delta results
 
@@ -166,10 +166,10 @@ Additional completed runtime work: Delta smoke test, both three-epoch training a
 
 Still required:
 
-1. Preserve the original Delta checkpoint weights and runtime logs. Uploaded configurations, rewrites, summaries, mismatch examples, and regenerated SVG/CSV figures have been organized locally; GitHub publication is pending approval.
+1. Preserve the original Delta checkpoint weights and runtime logs. Uploaded configurations, rewrites, summaries, mismatch examples, and regenerated SVG/CSV figures are now archived in `evidence/delta-24205857/`.
 2. Finish manual review of successful and failed test/generalization examples, including functional-detail preservation.
 3. Obtain small/BART predictions on exactly the same evaluation inputs and rescore with the common scorer. Include untuned small and the small clean-identity ablation when matching outputs are available. Do not compare mismatched datasets as a model ranking.
-4. Freeze the common downstream evaluation matrix with Person 1, export and validate Qwen requests, then run the frozen Qwen configuration and shared scorer. The current exporter is built around the original controlled-baseline cases and boundary cues; exports for all three methods on test (1,680 requests each) and generalization (2,016 each) have now passed the original runner validation. These requests have not been executed; handoff instructions and scripts are prepared locally and await publication.
+4. Freeze the common downstream evaluation matrix with Person 1, export and validate Qwen requests, then run the frozen Qwen configuration and shared scorer. The current exporter is built around the original controlled-baseline cases and boundary cues; exports for all three methods on test (1,680 requests each) and generalization (2,016 each) have now passed the original runner validation. These requests have not been executed; see `QWEN_HANDOFF.md`.
 5. Aggregate matched downstream outcomes and paired transitions after results arrive; finish cross-method figures and the English methods/results discussion.
 
 Epoch-boundary resume is implemented but awaits Delta runtime testing. Automated downstream aggregation is not implemented. Text-level evaluation is complete for the reported runs; the full Person 3 downstream comparison remains pending.
@@ -188,4 +188,4 @@ Epoch-boundary resume is implemented but awaits Delta runtime testing. Automated
 
 Existing repository small/BART rewrites were rescored with the same pairs and scorer; dataset hashes and description coverage passed. This is a descriptive comparison of the available runs, not a controlled architecture-only experiment. Base does not outperform small on dev; BART outperforms base on test and recovers one additional generalization row. Missing small test/generalization results are not estimated.
 
-Paired text recovery: multi succeeds where single fails on 3 test rows and 13 generalization rows; single succeeds where multi fails on zero rows in either set. This describes text recovery, not paired Qwen choices or independent statistical samples. Concrete paired examples have been prepared locally and await publication.
+Paired text recovery: multi succeeds where single fails on 3 test rows and 13 generalization rows; single succeeds where multi fails on zero rows in either set. This describes text recovery, not paired Qwen choices or independent statistical samples. Concrete examples are archived in `evidence/delta-24205857/examples.json`.

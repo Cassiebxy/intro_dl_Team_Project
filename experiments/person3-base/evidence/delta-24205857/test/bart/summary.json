@@ -1,0 +1,74 @@
+[
+  {
+    "method": "test-bart",
+    "dataset_sha256": "cc20681e159ed099b6825ee1a321b37c03b70fa3c44b2e177c9e75f8a13313a4",
+    "slice": "all",
+    "n": 95,
+    "source_groups": 13,
+    "exact": 95,
+    "exact_rate": 1.0,
+    "changed": 76,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "test-bart",
+    "dataset_sha256": "cc20681e159ed099b6825ee1a321b37c03b70fa3c44b2e177c9e75f8a13313a4",
+    "slice": "clean",
+    "n": 19,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 1.0,
+    "changed": 0,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "test-bart",
+    "dataset_sha256": "cc20681e159ed099b6825ee1a321b37c03b70fa3c44b2e177c9e75f8a13313a4",
+    "slice": "suffix_1",
+    "n": 19,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 1.0,
+    "changed": 19,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "test-bart",
+    "dataset_sha256": "cc20681e159ed099b6825ee1a321b37c03b70fa3c44b2e177c9e75f8a13313a4",
+    "slice": "prefix_2",
+    "n": 19,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 1.0,
+    "changed": 19,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "test-bart",
+    "dataset_sha256": "cc20681e159ed099b6825ee1a321b37c03b70fa3c44b2e177c9e75f8a13313a4",
+    "slice": "suffix_3",
+    "n": 19,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 1.0,
+    "changed": 19,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "test-bart",
+    "dataset_sha256": "cc20681e159ed099b6825ee1a321b37c03b70fa3c44b2e177c9e75f8a13313a4",
+    "slice": "unseen_wording",
+    "n": 19,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 1.0,
+    "changed": 19,
+    "errors": 0,
+    "truncated": 0
+  }
+]

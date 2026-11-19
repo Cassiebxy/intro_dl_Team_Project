@@ -1,0 +1,62 @@
+[
+  {
+    "method": "base-multi",
+    "dataset_sha256": "e3c0a6d70e7e18776776d1c3d7e8b72bcd9ce8f9e21cf2ce7d854ce0a9ac1695",
+    "slice": "all",
+    "n": 114,
+    "source_groups": 13,
+    "exact": 71,
+    "exact_rate": 0.6228070175438597,
+    "changed": 52,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "base-multi",
+    "dataset_sha256": "e3c0a6d70e7e18776776d1c3d7e8b72bcd9ce8f9e21cf2ce7d854ce0a9ac1695",
+    "slice": "clean",
+    "n": 19,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 1.0,
+    "changed": 0,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "base-multi",
+    "dataset_sha256": "e3c0a6d70e7e18776776d1c3d7e8b72bcd9ce8f9e21cf2ce7d854ce0a9ac1695",
+    "slice": "seen_cue",
+    "n": 19,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 1.0,
+    "changed": 19,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "base-multi",
+    "dataset_sha256": "e3c0a6d70e7e18776776d1c3d7e8b72bcd9ce8f9e21cf2ce7d854ce0a9ac1695",
+    "slice": "unseen_wording",
+    "n": 38,
+    "source_groups": 13,
+    "exact": 14,
+    "exact_rate": 0.3684210526315789,
+    "changed": 14,
+    "errors": 0,
+    "truncated": 0
+  },
+  {
+    "method": "base-multi",
+    "dataset_sha256": "e3c0a6d70e7e18776776d1c3d7e8b72bcd9ce8f9e21cf2ce7d854ce0a9ac1695",
+    "slice": "unseen_family",
+    "n": 38,
+    "source_groups": 13,
+    "exact": 19,
+    "exact_rate": 0.5,
+    "changed": 19,
+    "errors": 0,
+    "truncated": 0
+  }
+]

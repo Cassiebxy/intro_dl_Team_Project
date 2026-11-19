@@ -1,0 +1,15 @@
+{
+  "inputs_sha256": "888a283030980e3ff0b3502302eae2606ba5f02fde2831b5988feadce7abaf58",
+  "model": "/projects/bjfu/mlin14/person3-runs/single-v1/checkpoint",
+  "rule": false,
+  "rules": null,
+  "model_files": {
+    "generation_config.json": "8145d7eecabff8e16a9876617a6d52728e9b8fbe24c426e6bf9ebbd6bfb87737",
+    "config.json": "7b8dd73485d4c572daa36dfe58ae7dd9a278ef39848d6b807a37c542577698b6",
+    "tokenizer_config.json": "c9ee6ac4bfd074493727c2a584e311fcc4c9e84aacabc38e5f8e5c2656b427d6",
+    "spiece.model": "d60acb128cf7b7f2536e8f38a5b18a05535c9e14c7a355904270e15b0945ea86",
+    "tokenizer.json": "850a36ce464e775cff5176ffdd6c0b93817e47a5a0364c43ebeccf340574f485",
+    "model.safetensors": "fe102d1ed3904ec0b47a464ab9c423880f6a567a5d623d2294ec5d39e99515fe",
+    "special_tokens_map.json": "7a1985a994c41886db38c719d2a3d2f40606663cc19d7c5d6a85d349320e06d2"
+  }
+}
