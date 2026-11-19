@@ -1,0 +1,14 @@
+{
+  "inputs_sha256": "852255d590c7520de1b5699e2dc100d66f8a51a8ec232b5b505911762ed86ae5",
+  "model": "runs/person2-small-flow/small-main-20261118/checkpoint",
+  "rule": false,
+  "rules": null,
+  "model_files": {
+    "model.safetensors": "de86b6df232070071487f9eee7e1ce590f6f91ca5439182afbf46d06ddb53549",
+    "tokenizer_config.json": "69dbbabb578e1407deade483a356526843e8e655a27ef23ae40deebf3f72a04e",
+    "special_tokens_map.json": "7a1985a994c41886db38c719d2a3d2f40606663cc19d7c5d6a85d349320e06d2",
+    "config.json": "952753fcd02abe3273d75c77ec6e7b722b7d3ac60241523162829f791eb7100a",
+    "tokenizer.json": "850a36ce464e775cff5176ffdd6c0b93817e47a5a0364c43ebeccf340574f485",
+    "generation_config.json": "f4027a34899341b7fb5f81f1e9134b88d5b616a1a65959f772e2afdb01edbe10"
+  }
+}

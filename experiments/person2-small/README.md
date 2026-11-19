@@ -53,3 +53,20 @@ The scripts use Python, PyTorch and Transformers. The packaged data are ready to
 A3 was applied to the same 16 cases, two tool orders and four conditions. Across all 128 cells, its Qwen inputs were identical to A1's, including the four cells with no archived response. The 124 matched scores are therefore identical for A1 and A3 in this setup. [A3 requests and scores](qwen-dev-a3/requests_and_scores.jsonl)
 
 The paired table compares both normalized descriptions with the corresponding clean descriptions in the same tool order and records strict calling correctness. Missing archive matches have a blank score. The four missing cells are from one case and require fresh inference under the corrected baseline configuration. The team still needs to confirm the shared split and scoring setup for the held-out three-model comparison. [Per-case rewrite and call comparison](qwen-dev-four/rewrite_vs_call.csv)
+
+## A1 held-out text recovery
+
+The frozen FLAN-T5-small A1 checkpoint exactly recovered 94/95 descriptions (98.95%) on the shared test set and 76/114 (66.67%) on generalization v1. Both sets reuse 19 held-out source descriptions across variants. All 209 rows passed ID and input-hash checks with zero generation errors or truncations. The [shared scorer](https://github.com/Cassiebxy/intro_dl_Team_Project/blob/20173cf6b/experiments/person3-base/pipeline.py) compares each output with its canonical description.
+
+| Generalization condition | Exact recovery |
+| --- | ---: |
+| Clean | 19/19 |
+| Familiar priority cue | 19/19 |
+| New priority wording 01 | 0/19 |
+| New priority wording 03 | 19/19 |
+| Maintenance claim | 19/19 |
+| Adoption-count claim | 0/19 |
+
+All 38 generalization mismatches copied the entire manipulated input. Recovery depended on the specific wording, even within the priority family. These metrics measure literal text recovery. Downstream tool selection requires paired Qwen scores.
+
+[Shared test predictions and scores](a1-heldout/test/) · [Generalization predictions and scores](a1-heldout/generalization/)
