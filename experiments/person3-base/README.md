@@ -39,9 +39,11 @@ python experiments/person3-base/pipeline.py train --model /path/to/flan-t5-base 
 python experiments/person3-base/pipeline.py train --model /path/to/flan-t5-base --mode single --single-cue suffix_1 --output experiments/person3-base/runs/base-single
 ```
 
-Training saves the selected `checkpoint/`, the most recent epoch in `last/`, optimizer state, exposure records, losses, configuration, package versions, and data/model hashes. It then reloads the selected model and generates development rewrites. The reload check compares outputs from two loads of the selected checkpoint; it does not compare an in-memory pre-save model against a reload.
+Training saves the selected `checkpoint/`, immutable completed epoch directories, optimizer state, exposure records, losses, configuration, package versions, and data/model hashes. It then reloads the selected model and generates development rewrites. The reload check compares outputs from two loads of the selected checkpoint; it does not compare an in-memory pre-save model against a reload.
 
-**Automatic resume is not implemented.** The saved last-epoch state is recovery material, not a verified restart mechanism. Do not describe a fresh rerun as a resumed run. Smoke mode uses 16 training and eight development examples for one epoch and must not be reported as a formal experiment.
+`--resume` restores the last completed epoch, including model, optimizer, row order, best-epoch selection, and CPU/CUDA RNG state. A partial epoch is repeated. Configuration changes are rejected. This recovery path awaits runtime testing on Delta. Do not run concurrent jobs with the same output directory. Smoke mode is not a formal experiment.
+
+See [DELTA.md](DELTA.md) for Delta submission instructions.
 
 ## Held-out evaluation
 
@@ -115,4 +117,4 @@ Still required, in execution order:
 6. Freeze a common downstream evaluation matrix, run Qwen, and implement matched downstream aggregation and paired transitions. Missing inference results must stay missing.
 7. Finish the cross-method tables, ablation figures, example analysis, and English methods/results section. Store checkpoint locations and configurations with the handoff.
 
-A verified resume command and automated downstream aggregation would improve the workflow but are not implemented in this version. The code delivery is not the completed Person 3 experiment.
+Epoch-boundary resume is implemented but awaits Delta runtime testing. Automated downstream aggregation is not implemented. The code delivery is not the completed Person 3 experiment.

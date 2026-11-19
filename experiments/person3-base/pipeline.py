@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import random
 import re
+import os
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -139,7 +140,9 @@ def train(args):
         rows = rows[:16]
         dev = dev[:8]
     out = Path(args.output)
-    out.mkdir(parents=True, exist_ok=False)
+    out.mkdir(parents=True, exist_ok=args.resume)
+    if args.resume and not (out / 'resume.json').exists():
+        raise ValueError('No completed epoch to resume; use a new output directory')
     set_seed(args.seed)
     device = device_for(torch, args.device)
     tokenizer, model = load_model(args.model, args.revision, device)
@@ -152,8 +155,13 @@ def train(args):
         transformers=transformers.__version__, checkpoint_selection='lowest seen-wording dev loss',
         loss_weighting='Person 2 example-weighted microbatch means; dev mean of batch means',
         local_model_hashes={str(p.relative_to(args.model)): file_hash(p) for p in Path(args.model).rglob('*') if p.is_file()} if Path(args.model).is_dir() else None)
-    write(out / 'run_config.json', config)
-    rows_write(out / 'train_exposures.jsonl', rows)
+    if args.resume:
+        saved_config = json.loads((out / 'run_config.json').read_text())
+        if saved_config != config:
+            raise ValueError('Resume configuration/environment/model hashes differ')
+    else:
+        write(out / 'run_config.json', config)
+        rows_write(out / 'train_exposures.jsonl', rows)
 
     def loss(batch):
         inputs = tokenizer([PREFIX + r['input_description'] for r in batch], padding=True, return_tensors='pt').to(device)
@@ -161,8 +169,26 @@ def train(args):
         labels[labels == tokenizer.pad_token_id] = -100
         return model(**inputs, labels=labels).loss
 
-    history, best = [], float('inf')
-    for epoch in range(config['epochs']):
+    history, best, start_epoch, best_epoch = [], float('inf'), 0, None
+    if args.resume:
+        pointer = json.loads((out / 'resume.json').read_text())
+        epoch_dir = out / pointer['directory']
+        del optimizer, model
+        tokenizer, model = load_model(str(epoch_dir), None, device)
+        optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5)
+        state = torch.load(epoch_dir / 'state.pt', map_location='cpu', weights_only=True)
+        optimizer.load_state_dict(state['optimizer'])
+        history, best = state['history'], state['best']
+        start_epoch, best_epoch = state['epoch'], state['best_epoch']
+        rows = [rows[i] for i in state['row_order']]
+        torch.set_rng_state(state['torch_rng'])
+        if device == 'cuda':
+            torch.cuda.set_rng_state_all(state['cuda_rng'])
+    canonical_ids = [r['example_id'] for r in training_rows(sets['train'], args.mode, args.single_cue)]
+    if args.smoke:
+        canonical_ids = canonical_ids[:16]
+    # Duplicate single-cue exposures have identical contents; track occurrence indices.
+    for epoch in range(start_epoch, config['epochs']):
         random.Random(args.seed + epoch).shuffle(rows)
         model.train()
         values = []
@@ -187,18 +213,33 @@ def train(args):
         history.append(dict(epoch=epoch+1, train_loss=sum(values)/len(values), dev_loss=score))
         rows_write(out / 'losses.jsonl', history)
         if score < best:
-            best = score
-            model.save_pretrained(out / 'checkpoint')
-            tokenizer.save_pretrained(out / 'checkpoint')
-            write(out / 'selection.json', dict(epoch=epoch+1, dev_loss=best))
-        # Epoch-boundary recovery state, separate from selected checkpoint.
-        model.save_pretrained(out / 'last')
-        tokenizer.save_pretrained(out / 'last')
-        torch.save(dict(epoch=epoch+1, optimizer=optimizer.state_dict(),
-                        torch_rng=torch.get_rng_state()), out / 'last/optimizer.pt')
+            best, best_epoch = score, epoch + 1
+        # Immutable completed epochs; publish the pointer only after all files exist.
+        import uuid
+        epoch_dir = out / f'epoch-{epoch+1}-{uuid.uuid4().hex[:8]}'
+        model.save_pretrained(epoch_dir)
+        tokenizer.save_pretrained(epoch_dir)
+        available = defaultdict(list)
+        for index, eid in enumerate(canonical_ids):
+            available[eid].append(index)
+        row_order = [available[r['example_id']].pop() for r in rows]
+        torch.save(dict(epoch=epoch+1, optimizer=optimizer.state_dict(), history=history,
+                        best=best, best_epoch=best_epoch, row_order=row_order,
+                        torch_rng=torch.get_rng_state(),
+                        cuda_rng=torch.cuda.get_rng_state_all() if device == 'cuda' else []),
+                   epoch_dir / 'state.pt')
+        completed = json.loads((out / 'resume.json').read_text()) if (out / 'resume.json').exists() else {'epochs': {}}
+        completed['epochs'][str(epoch+1)] = epoch_dir.name
+        completed['directory'] = epoch_dir.name
+        write(out / 'resume.tmp.json', completed)
+        os.replace(out / 'resume.tmp.json', out / 'resume.json')
         print(history[-1], flush=True)
     del optimizer, model
-    tokenizer, model = load_model(str(out / 'checkpoint'), None, device)
+    completed = json.loads((out / 'resume.json').read_text())
+    tokenizer, model = load_model(str(out / completed['epochs'][str(best_epoch)]), None, device)
+    model.save_pretrained(out / 'checkpoint')
+    tokenizer.save_pretrained(out / 'checkpoint')
+    write(out / 'selection.json', dict(epoch=best_epoch, dev_loss=best))
     probe = generate(dev[:8], tokenizer, model, device, out.name)
     del model
     tokenizer, model = load_model(str(out / 'checkpoint'), None, device)
@@ -311,6 +352,7 @@ def main():
     p.add_argument('--single-cue', choices=list(CUES), default='suffix_1')
     p.add_argument('--seed', type=int, default=42)
     p.add_argument('--smoke', action='store_true')
+    p.add_argument('--resume', action='store_true')
     p.add_argument('--device', choices=['auto', 'cuda', 'mps', 'cpu'], default='auto')
     p.add_argument('--output', required=True)
     p = sub.add_parser('predict')
