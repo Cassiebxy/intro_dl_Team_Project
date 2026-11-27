@@ -1,0 +1,38 @@
+{
+  "choice_recovery": {
+    "paired_conditions": 840,
+    "eligible_switches": 111,
+    "restored": {
+      "FLAN-T5-small A1": 89,
+      "FLAN-T5-base multi-cue": 81,
+      "FLAN-T5-base single-cue": 49,
+      "Fixed boundary rules": 18,
+      "BART-base": 68
+    }
+  },
+  "clean_failures": {
+    "cases": 42,
+    "failed_cases": 14,
+    "checker_categories": {
+      "simple_function_checker:missing_required": 8,
+      "type_error:simple": 1,
+      "value_error:string": 5
+    }
+  },
+  "paired_gap_comparison": {
+    "FLAN-T5-base multi-cue": {
+      "comparator_minus_small_pp": 1.9,
+      "percentile_ci95_pp": [
+        0.0,
+        6.0
+      ]
+    },
+    "BART-base": {
+      "comparator_minus_small_pp": 3.81,
+      "percentile_ci95_pp": [
+        0.0,
+        6.67
+      ]
+    }
+  }
+}
